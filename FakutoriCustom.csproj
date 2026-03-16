@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net35</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <AssemblyName>FakutoriCustom</AssemblyName>
-    <Product>My first plugin</Product>
+    <Product>FakutoriCustomBlocks</Product>
     <Version>1.0.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
@@ -15,11 +15,15 @@
     <RootNamespace>FakutoriCustom</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>E:\SteamLibrary\steamapps\common\Fakutori Demo\BepInEx\plugins\$(AssemblyName)</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
     <PackageReference Include="BepInEx.Core" Version="5.*" />
     <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
-    <PackageReference Include="UnityEngine.Modules" Version="5.6.0" IncludeAssets="compile" />
+    <PackageReference Include="UnityEngine.Modules" Version="2021.3.13" />
   </ItemGroup>
 
    <ItemGroup>
@@ -37,9 +41,6 @@
       </Reference>
       <Reference Include="UnityEngine.UI">
           <HintPath>lib/UnityEngine.UI.dll</HintPath>
-      </Reference>
-      <Reference Include="UniverseLib">
-          <HintPath>lib/UniverseLib.Mono.dll</HintPath>
       </Reference>
     </ItemGroup>
   
