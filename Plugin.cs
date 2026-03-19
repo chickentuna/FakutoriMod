@@ -52,7 +52,8 @@ class ProgressManagerPatch
         // Change stuff in the prefab
 
         // var symbol = mudPrefab.transform.Find("Symbol").gameObject;
-        // var block = mudPrefab.transform.Find("Block").gameObject;
+        var block = anyGenPrefab.transform.Find("Visuals").Find("Block").gameObject;
+
 
 
         // Change block id and name
@@ -61,6 +62,24 @@ class ProgressManagerPatch
 
         var NameKeyField = AccessTools.Field(typeof(BlockData), "NameKey");
         NameKeyField.SetValue(anyGenData, $"custom_Any Generator");
+
+        // Icon
+        
+        var mat = block.GetComponent<SpriteRenderer>().material;
+        var renderers = anyGenPrefab.GetComponentsInChildren<Renderer>(true);
+
+        foreach (var r in renderers)
+        {
+            Plugin.Logger.LogInfo($"Renderer: {r.name} ({r.GetType().Name})");
+
+            foreach (var m in r.materials)
+            {
+                if (m != null)
+                {
+                    Plugin.Logger.LogInfo($"  Mat: {m.name} | Shader: {m.shader?.name}");
+                }
+            }
+        }
 
         // Add block to library
         var MachineBlocksField = AccessTools.Field(typeof(BlocksLibrary), "MachineBlocks");

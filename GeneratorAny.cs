@@ -33,8 +33,8 @@ public class GeneratorAny : ProcessingBlock
 		}
 		base.outputBlocks.Clear();
 		// found in other controllers:
-		// if ((AbstractSingleton<TimeManager>.Instance.stepIndex) % 2 == 1)
-		if ((AbstractSingleton<TimeManager>.Instance.stepIndex) % 4 == 1)
+		if ((AbstractSingleton<TimeManager>.Instance.stepIndex) % 2 == 1)
+		// if ((AbstractSingleton<TimeManager>.Instance.stepIndex) % 4 == 1)
 
 		// if ((AbstractSingleton<TimeManager>.Instance.stepIndex + 32) % 16 == 0)
 		{
