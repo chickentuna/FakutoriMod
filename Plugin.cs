@@ -14,13 +14,13 @@ namespace FakutoriCustom;
 public class Plugin : BaseUnityPlugin
 {
     internal static new ManualLogSource Logger;
-        
+
     private void Awake()
     {
         // Plugin startup logic
         Logger = base.Logger;
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
-        var harmony = new Harmony("com.chickentuna.archipelago");
+        var harmony = new Harmony("com.chickentuna.skyblock");
         harmony.PatchAll();
     }
 }
@@ -34,107 +34,91 @@ class ProgressManagerPatch
     {
         Plugin.Logger.LogInfo("ProgressManager.Start has been called!");
 
-        // Create a new Block by duplicating OilBlock fr.
+        // Create a new Block by duplicating Generator Water.
         BlocksLibrary blocksLibrary = Resources.FindObjectsOfTypeAll<BlocksLibrary>()[0];
-        var oilData = blocksLibrary.GetBlockDataById(19);
-        var oilPrefab = oilData.prefab;
-        
-        var mudData =  ScriptableObject.Instantiate(oilData);
+        var waterGenData = blocksLibrary.GetBlockDataById(1);
+        var waterGenPrefab = waterGenData.prefab;
 
-        var mudPrefab = GameObject.Instantiate(oilPrefab);
-        mudPrefab.SetActive(false);
-        mudPrefab.name = "MudBlock";
+        var anyGenData = ScriptableObject.Instantiate(waterGenData);
 
-        // Get components by name:
-
-        // var leftEye = mudPrefab.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "Left eye");
-
-        // Plugin.Logger.LogInfo(leftEye != null ? "Found Left eye" : "Left eye NOT found");
-
-
-        var face = mudPrefab.transform.Find("Face");
-         foreach (Transform t in face)
-         {
-             Plugin.Logger.LogInfo($"Child: {t.name}");
-         }
-        var leftEye = face.Find("Left eye").gameObject;
-        var rightEye = face.Find("Right eye").gameObject;
-        var mouth = face.Find("Mouth").gameObject;
-        var symbol = mudPrefab.transform.Find("Symbol").gameObject;
-        var block = mudPrefab.transform.Find("Block").gameObject;
+        var anyGenPrefab = GameObject.Instantiate(waterGenPrefab);
+        anyGenPrefab.SetActive(false);
+        anyGenPrefab.name = "Generator any";
 
         // Change prefab reference
         var PrefabField = AccessTools.Field(typeof(BlockData), "Prefab");
-        PrefabField.SetValue(mudData, mudPrefab);
-        
-        // Change the mouth to the entropy mouth:
-        var entropyData = blocksLibrary.GetBlockDataById(38); //37
-        var entropyPrefab = entropyData.prefab;
-        var entropyMouth = entropyPrefab.transform.Find("Face").Find("Mouth").gameObject;
-        mouth.GetComponent<SpriteRenderer>().sprite = entropyMouth.GetComponent<SpriteRenderer>().sprite;
-        // Change left to void left eye:
-        var voidData = blocksLibrary.GetBlockDataById(38);
-        var voidPrefab = voidData.prefab;
-        var voidLeftEye = voidPrefab.transform.Find("Face").Find("Left eye").gameObject;
-        leftEye.GetComponent<SpriteRenderer>().sprite = voidLeftEye.GetComponent<SpriteRenderer>().sprite;
-        // Change right to Copper right eye:
-        var copperData = blocksLibrary.GetBlockDataById(29);
-        var copperPrefab = copperData.prefab;
-        var copperRightEye = copperPrefab.transform.Find("Face").Find("Right eye").gameObject;
-        rightEye.GetComponent<SpriteRenderer>().sprite = copperRightEye.GetComponent<SpriteRenderer>().sprite;
+        PrefabField.SetValue(anyGenData, anyGenPrefab);
 
-        // Find shader
-        var waterData = blocksLibrary.GetBlockDataById(14);
-        var waterPrefab = waterData.prefab;
-        var waterSR = waterPrefab.transform.Find("Block").GetComponent<SpriteRenderer>();
-        var waterMat = waterSR.material;
+        // Change stuff in the prefab
 
-        var mudMat = block.GetComponent<SpriteRenderer>().material;
+        // var symbol = mudPrefab.transform.Find("Symbol").gameObject;
+        // var block = mudPrefab.transform.Find("Block").gameObject;
 
-        for (int i = 0; i < waterMat.shader.GetPropertyCount(); i++)
-        {
-            Plugin.Logger.LogInfo(waterMat.shader.GetPropertyName(i));
-        }
-
-
-                // Copy the gradient texture
-        var gradientTex = waterMat.GetTexture("_GradientTexture");
-        mudMat.SetTexture("_ColorGradient", gradientTex);
 
         // Change block id and name
         var BlockIdField = AccessTools.Field(typeof(BlockData), "BlockId");
-        BlockIdField.SetValue(mudData, 100);
+        BlockIdField.SetValue(anyGenData, 100);
 
         var NameKeyField = AccessTools.Field(typeof(BlockData), "NameKey");
-        NameKeyField.SetValue(mudData, $"custom_Mud Block");
+        NameKeyField.SetValue(anyGenData, $"custom_Any Generator");
 
-        // Add block and create new Recipe.
-        var ElementBlocksField = AccessTools.Field(typeof(BlocksLibrary), "ElementBlocks");
-        var ElementBlocks = (BlockData[])ElementBlocksField.GetValue(blocksLibrary);
-        
-        ElementBlocks = ElementBlocks.Append(mudData).ToArray();
-        ElementBlocksField.SetValue(blocksLibrary, ElementBlocks);
+        // Add block to library
+        var MachineBlocksField = AccessTools.Field(typeof(BlocksLibrary), "MachineBlocks");
+        var MachineBlocks = (BlockData[])MachineBlocksField.GetValue(blocksLibrary);
+        MachineBlocks = MachineBlocks.Append(anyGenData).ToArray();
+        MachineBlocksField.SetValue(blocksLibrary, MachineBlocks);
 
-        // ?? not sure if this is necessary or useful, at least for simple blocks
-        mudData.blockController.SetBlockData(mudData);
+        // new block controller (dunno how this bit works yet)
+        var BlockControllerField = AccessTools.Field(typeof(BlockData), "BlockController");
+        BlockControllerField.SetValue(anyGenData, new GeneratorAny());
+        //TODO: make a custom class
+    }
+}
 
-        Recipe oilRecipe = blocksLibrary.GetRecipesByProduct(19)[0];
-        Recipe mudRecipe = ScriptableObject.Instantiate(oilRecipe);
-        
-        var ProductField = AccessTools.Field(typeof(Recipe), "Product");
-        var RecipeIngredientsField = AccessTools.Field(typeof(Recipe), "Ingredients");
-        
-        RecipeIngredient[] ingredients = new RecipeIngredient[] {
-            new RecipeIngredient(waterData, 2)
-        };
-        
-        ProductField.SetValue(mudRecipe, mudData);
-        RecipeIngredientsField.SetValue(mudRecipe, ingredients);
+class EditModeMenuPatch
+{
 
-        var RecipesField = AccessTools.Field(typeof(BlocksLibrary), "Recipes");
-        var Recipes = (Recipe[])RecipesField.GetValue(blocksLibrary);
-        Recipes = Recipes.Append(mudRecipe).ToArray();
-        RecipesField.SetValue(blocksLibrary, Recipes);
+    [HarmonyPatch("FillItems")]
+    [HarmonyPostfix]
+    static void PostFillItems(EditModeMenu __instance)
+    {
+        var currentLayerField = AccessTools.Field(typeof(EditModeMenu), "currentLayer");
+        var currentLayer = (EditModeLayer)currentLayerField.GetValue(__instance);
+        if (currentLayer != EditModeLayer.Machines)
+        {
+            return;
+        }
+
+
+        // Game has just filled the menu with the standard icons.
+        var menuItemsField = AccessTools.Field(typeof(EditModeMenu), "menuItems");
+        var menuItems = (List<SelectMenuItem>)menuItemsField.GetValue(__instance);
+        var blocksLibrary = AbstractSingleton<BlocksManager>.Instance.blocksLibrary;
+
+        var AddItemMethod = AccessTools.Method(typeof(EditModeMenu), "AddItem",
+            new Type[] {
+                    typeof(Sprite),      // uiSprite
+                    typeof(string),      // name
+                    typeof(string),      // price
+                    typeof(bool),        // showShadow
+                    typeof(SelectionTool), // tool (base class of UnlockMachineBlockTool)
+                    typeof(bool),        // isLocked
+                    typeof(int)          // atIndex
+            }
+        );
+
+        // Put new machine block in menu
+        BlockData blockData = blocksLibrary.GetBlockDataById(100);
+
+        AddItemMethod.Invoke(__instance, new object[] {
+            blockData.uiSprite,
+            blockData.blockName,
+            blockData.moneyValue.ToString(),
+            true,
+            new PlaceMachineBlockTool(blockData) as SelectionTool,
+            false,
+            -1
+        });
     }
 }
 
@@ -156,21 +140,3 @@ class BlockNamePropertyPatch
     }
 }
 
-
-[HarmonyPatch(typeof(BlocksLibrary))]
-internal class BlocksLibraryPatch
-{
-
-    [HarmonyPatch("GetCombineRecipeFromIngredients")]
-    [HarmonyPostfix]
-    public static void PostGetCombineRecipeFromIngredients(BlocksLibrary __instance, List<ElementBlock> blocks, ref ValueTuple<int, Recipe> __result)
-    {
-        if (blocks.Count == 2 && blocks[0].blockData.blockId == 14 && blocks[1].blockData.blockId == 14)
-        {
-            var blocksLibrary = Resources.FindObjectsOfTypeAll<BlocksLibrary>()[0];
-            var mudRecipe = blocksLibrary.GetRecipesByProduct(100)[0];
-            __result = (2, mudRecipe);
-        }
-    }
-
-}
