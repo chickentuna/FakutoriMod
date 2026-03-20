@@ -16,6 +16,7 @@ namespace FakutoriCustom;
 public class Plugin : BaseUnityPlugin
 {
     internal static new ManualLogSource Logger;
+    internal static Texture2D FXTexture;
 
     private void Awake()
     {
@@ -51,11 +52,17 @@ class ProgressManagerPatch
         var PrefabField = AccessTools.Field(typeof(BlockData), "Prefab");
         PrefabField.SetValue(anyGenData, anyGenPrefab);
 
-        // Change stuff in the prefab
 
+
+        var bytes = File.ReadAllBytes("BepInEx/plugins/FakutoriCustom/generator fx any.png");
+        var tex = new Texture2D(2, 2);
+        tex.LoadImage(bytes);
+        Plugin.FXTexture = tex;
+
+
+        // Change stuff in the prefab
         // var symbol = mudPrefab.transform.Find("Symbol").gameObject;
         var block = anyGenPrefab.transform.Find("Visuals").Find("Block").gameObject;
-
 
 
         // Change block id and name
@@ -64,11 +71,6 @@ class ProgressManagerPatch
 
         var NameKeyField = AccessTools.Field(typeof(BlockData), "NameKey");
         NameKeyField.SetValue(anyGenData, $"custom_Any Generator");
-
-        // Icon
-        
-        var mat = block.GetComponent<SpriteRenderer>().material;
-        var renderers = anyGenPrefab.GetComponentsInChildren<Renderer>(true);
        
 
         // Add block to library
@@ -163,18 +165,14 @@ class BlocksManagerPatch
         ((Component)blockVisuals).transform.position = onCell.position.ToVector3();
         blockVisuals.AttachToBlock(onBlock);
 
-        var bytes = File.ReadAllBytes("BepInEx/plugins/FakutoriCustom/net48/generator fx any.png");
-        var tex = new Texture2D(2, 2);
-        tex.LoadImage(bytes);
-
         if (onBlock.blockData.blockId == 100)
         {
             var go = blockVisuals.transform.Find("Visuals").Find("Block");
-            var mat = go.GetComponent<SpriteRenderer>().material;
-						var mpb = new MaterialPropertyBlock();
-            mat.SetTexture("_FXTexture", tex);            
-            mpb.SetTexture("_FXTexture", tex);
-            // Shader.GetGlobalTexture("_FXTexture");
+            var ren = go.GetComponent<SpriteRenderer>();
+            var mpb = new MaterialPropertyBlock();
+            ren.GetPropertyBlock(mpb);
+            mpb.SetTexture("_FXTexture", Plugin.FXTexture);
+            ren.SetPropertyBlock(mpb);
         }
     }
 }

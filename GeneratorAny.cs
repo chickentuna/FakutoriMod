@@ -18,8 +18,6 @@ public class GeneratorAny : ProcessingBlock
 
 	public const int frequency = 2;
 
-	public static Texture2D texture;
-
 	// are those even used?
 
 	public GeneratorAny()
@@ -38,35 +36,38 @@ public class GeneratorAny : ProcessingBlock
 		// if ((AbstractSingleton<TimeManager>.Instance.stepIndex) % 2 == 1)
 		// if ((AbstractSingleton<TimeManager>.Instance.stepIndex) % 4 == 1)
 
+		var bytes = File.ReadAllBytes("BepInEx/plugins/FakutoriCustom/generator fx any.png");
+        var myTex = new Texture2D(2, 2);
+        myTex.LoadImage(bytes);
+		myTex.name = "generator fx any";
+
 		if ((AbstractSingleton<TimeManager>.Instance.stepIndex + 32) % 16 == 0)
 		{
-			var renderers = UnityEngine.Object.FindObjectsOfType<Renderer>();
+			// var renderers = UnityEngine.Object.FindObjectsOfType<Renderer>();	
 
-		
+			// foreach (var r in renderers)
+			// {
+			// 	// Plugin.Logger.LogInfo($"Renderer: {r.name} ({r.GetType().Name})");
 
-			foreach (var r in renderers)
-			{
-				// Plugin.Logger.LogInfo($"Renderer: {r.name} ({r.GetType().Name})");
+			// 	foreach (var m in r.materials)
+			// 	{
+			// 		if (m != null)
+			// 		{
+			// 			// Plugin.Logger.LogInfo($"  Mat: {m.name} | Shader: {m.shader?.name}");
+			// 			var mpb = new MaterialPropertyBlock();
 
-				foreach (var m in r.materials)
-				{
-					if (m != null)
-					{
-						// Plugin.Logger.LogInfo($"  Mat: {m.name} | Shader: {m.shader?.name}");
-						var mpb = new MaterialPropertyBlock();
-
-						r.GetPropertyBlock(mpb);
-						var tex = mpb.GetTexture("_FXTexture") ?? r.material.GetTexture("_FXTexture") ?? Shader.GetGlobalTexture("_FXTexture");
-						if (tex != null && tex.name.StartsWith("generator fx"))
-						{
-							var t1 = mpb.GetTexture("_FXTexture")?.name ?? "null";
-							mpb.SetTexture("_FXTexture", GeneratorAny.texture);
-							var t2 = mpb.GetTexture("_FXTexture")?.name ?? "null";
-							Plugin.Logger.LogInfo($"Updated _FXTexture for {r.name} from {t1} to {t2}");
-						}
-					}
-				}
-			}
+			// 			r.GetPropertyBlock(mpb);
+			// 			var tex = mpb.GetTexture("_FXTexture");
+			// 			if (tex != null && tex.name.StartsWith("generator fx"))
+			// 			{
+			// 				var t1 = mpb.GetTexture("_FXTexture")?.name ?? "null";
+			// 				mpb.SetTexture("_FXTexture", myTex);
+			// 				var t2 = mpb.GetTexture("_FXTexture")?.name ?? "null";
+			// 				Plugin.Logger.LogInfo($"Updated _FXTexture for {r.name} from {t1} to {t2}");
+			// 			}
+			// 		}
+			// 	}
+			// }
 
 			GridCell cellInDirection = base.gridCell.GetCellInDirection(base.direction);
 			if (cellInDirection.IsCellFree(base.layer))
@@ -164,11 +165,6 @@ public class GeneratorAny : ProcessingBlock
 
 	public override Block GetNewInstance()
 	{
-		var bytes = File.ReadAllBytes("BepInEx/plugins/FakutoriCustom/net48/generator fx any.png");
-        texture = new Texture2D(2, 2);
-        texture.LoadImage(bytes);
-		texture.name = "generator fx any";
-		
 		return new GeneratorAny();
 	}
 
