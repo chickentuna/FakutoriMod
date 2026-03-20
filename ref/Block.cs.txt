@@ -1,0 +1,198 @@
+using System.Collections.Generic;
+using Fakutori.Grid;
+using Fakutori.VFX;
+using UnityEngine;
+using UnityEngine.Events;
+
+public abstract class Block
+{
+	public GridCell gridCell { get; protected set; }
+
+	public BlockData blockData { get; protected set; }
+
+	public virtual bool isActive { get; protected set; }
+
+	public Vector2Int position => gridCell.position;
+
+	public virtual BlockType blockType => BlockType.Any;
+
+	public virtual int savePriority => 1;
+
+	public int layer => (int)blockData.layer;
+
+	public virtual bool canTurn => false;
+
+	public virtual bool canBeSoldForMoney => true;
+
+	public virtual bool isPermanent => false;
+
+	public virtual int moneyMultiplier => 1;
+
+	public virtual int manaMultiplier => 1;
+
+	public virtual int movementPhaseOrder => -1;
+
+	public virtual int movementPhaseSecondaryOrder => position.x * 17 + position.y * 23;
+
+	public virtual int actionPhaseOrder => -1;
+
+	public virtual int actionPhaseSecondaryOrder => position.x * 17 + position.y * 23;
+
+	public virtual bool isMover => false;
+
+	public virtual bool isMoving => false;
+
+	public virtual Direction movePhaseDirection => Direction.None;
+
+	public virtual float movingOrder => 0f;
+
+	public UnityEvent<BlockAction> OnAction { get; set; } = new UnityEvent<BlockAction>();
+
+	public UnityEvent OnHideOrDespawn { get; private set; } = new UnityEvent();
+
+	public UnityEvent<float, float> OnPlace { get; set; } = new UnityEvent<float, float>();
+
+	public UnityEvent<VFX?, int, int, VfxParams> onApplyVfx { get; private set; } = new UnityEvent<VFX?, int, int, VfxParams>();
+
+	public UnityEvent onSetInCursor { get; private set; } = new UnityEvent();
+
+	public abstract Block GetNewInstance();
+
+	public virtual void Init(GridCell gridCell, Block originalBlock, BlockStatus status, int duration, bool fromSave)
+	{
+		isActive = true;
+		this.gridCell = gridCell;
+		gridCell?.SetContent(this);
+	}
+
+	public virtual void ExecuteMovementPhase()
+	{
+	}
+
+	public virtual void ExecuteActionPhase()
+	{
+	}
+
+	public virtual void ExecuteCleanupPhase()
+	{
+	}
+
+	public virtual void SetBlockData(BlockData data)
+	{
+		blockData = data;
+	}
+
+	public virtual void SetGridCell(GridCell gridCell, bool fromTool = false)
+	{
+		this.gridCell = gridCell;
+		gridCell.SetContent(this);
+	}
+
+	public virtual void SetInCursor()
+	{
+		gridCell?.RemoveContent(this);
+	}
+
+	public void RequestSetInCursor()
+	{
+		onSetInCursor.Invoke();
+	}
+
+	public void ReleaseFromCursor()
+	{
+		if (gridCell != null)
+		{
+			SetGridCell(gridCell, fromTool: true);
+		}
+	}
+
+	public virtual bool Despawn()
+	{
+		isActive = false;
+		SetInvisible();
+		return true;
+	}
+
+	public virtual void OnRemove()
+	{
+	}
+
+	public void ToggleVisible(bool isVisible)
+	{
+		if (isVisible)
+		{
+			SetVisible();
+		}
+		else if (!isVisible)
+		{
+			SetInvisible();
+		}
+	}
+
+	public void SetVisible()
+	{
+		AbstractSingleton<BlocksManager>.Instance.SpawnBlockVisuals(this, gridCell);
+	}
+
+	public void SetInvisible()
+	{
+		OnHideOrDespawn.Invoke();
+	}
+
+	public virtual void InterruptAction()
+	{
+	}
+
+	public void ApplyVfx(VFX vfxType, int stepsDuration, int elapsedDuration = 0, VfxParams param = null)
+	{
+		onApplyVfx.Invoke(vfxType, stepsDuration, elapsedDuration, param);
+	}
+
+	public void PlaceFromTool(float delay = 0f, float amplitudeFactor = 1f)
+	{
+		if (gridCell != null && !gridCell.isVisible)
+		{
+			SetInvisible();
+		}
+		OnPlace.Invoke(delay, amplitudeFactor);
+	}
+
+	public virtual List<ControlShortcut> GetBlockActions(GameControls controls, bool includeAdvancedActions = true)
+	{
+		return new List<ControlShortcut>();
+	}
+
+	public virtual bool IsTravellingInDirection(Direction direction)
+	{
+		return false;
+	}
+
+	public virtual bool IsFallingInDirection(Direction direction)
+	{
+		return false;
+	}
+
+	public override string ToString()
+	{
+		return blockData.name;
+	}
+
+	public virtual SerializedBlock SerializeBlock(bool saveAsBlueprint)
+	{
+		return new SerializedBlock
+		{
+			Position = position,
+			BlockDataId = blockData.blockId
+		};
+	}
+
+	public virtual void DeserializeBlock(SerializedBlock block, BlockData data)
+	{
+		blockData = data;
+	}
+
+	public virtual void DeserializeBlockOnClone(SerializedBlock block, BlockData data)
+	{
+		DeserializeBlock(block, data);
+	}
+}

@@ -6,6 +6,8 @@ using Fakutori;
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using Fakutori.Grid;
+using System.IO;
 
 
 namespace FakutoriCustom;
@@ -67,19 +69,7 @@ class ProgressManagerPatch
         
         var mat = block.GetComponent<SpriteRenderer>().material;
         var renderers = anyGenPrefab.GetComponentsInChildren<Renderer>(true);
-
-        foreach (var r in renderers)
-        {
-            Plugin.Logger.LogInfo($"Renderer: {r.name} ({r.GetType().Name})");
-
-            foreach (var m in r.materials)
-            {
-                if (m != null)
-                {
-                    Plugin.Logger.LogInfo($"  Mat: {m.name} | Shader: {m.shader?.name}");
-                }
-            }
-        }
+       
 
         // Add block to library
         var MachineBlocksField = AccessTools.Field(typeof(BlocksLibrary), "MachineBlocks");
@@ -90,7 +80,6 @@ class ProgressManagerPatch
         // new block controller (dunno how this bit works yet)
         var BlockControllerField = AccessTools.Field(typeof(BlockData), "BlockController");
         BlockControllerField.SetValue(anyGenData, new GeneratorAny());
-        //TODO: make a custom class
     }
 }
 
@@ -156,6 +145,37 @@ class BlockNamePropertyPatch
             return false;
         }
         return true;
+    }
+}
+
+[HarmonyPatch(typeof(BlocksManager))]
+class BlocksManagerPatch
+{
+    [HarmonyPatch(
+        "SpawnBlockVisuals",
+        new Type[] { typeof(Block), typeof(GridCell) }
+    )]
+    [HarmonyPrefix]
+    static void PreSpawnBlockVisuals(BlocksManager __instance, Block onBlock, GridCell onCell)
+    {
+        BlockVisuals blockVisuals = __instance.SpawnBlockVisuals(onBlock.blockData);
+        ((Component)blockVisuals).transform.parent = ((Component)__instance).transform;
+        ((Component)blockVisuals).transform.position = onCell.position.ToVector3();
+        blockVisuals.AttachToBlock(onBlock);
+
+        var bytes = File.ReadAllBytes("BepInEx/plugins/FakutoriCustom/net48/generator fx any.png");
+        var tex = new Texture2D(2, 2);
+        tex.LoadImage(bytes);
+
+        if (onBlock.blockData.blockId == 100)
+        {
+            var go = blockVisuals.transform.Find("Visuals").Find("Block");
+            var mat = go.GetComponent<SpriteRenderer>().material;
+						var mpb = new MaterialPropertyBlock();
+            mat.SetTexture("_FXTexture", tex);            
+            mpb.SetTexture("_FXTexture", tex);
+            // Shader.GetGlobalTexture("_FXTexture");
+        }
     }
 }
 

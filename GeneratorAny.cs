@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Fakutori.Grid;
 using FakutoriCustom;
 using HarmonyLib;
+using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,28 +18,56 @@ public class GeneratorAny : ProcessingBlock
 
 	public const int frequency = 2;
 
+	public static Texture2D texture;
+
 	// are those even used?
 
 	public GeneratorAny()
 	{
-		
+
 	}
 
 	public override void ExecuteActionPhase()
 	{
-		Plugin.Logger.LogInfo("GeneratorAny ExecuteActionPhase called");
 		if (!UpdateProcess())
 		{
-			Plugin.Logger.LogInfo("GeneratorAny is not ready to generate a block yet, skipping");
 			return;
 		}
 		base.outputBlocks.Clear();
 		// found in other controllers:
-		if ((AbstractSingleton<TimeManager>.Instance.stepIndex) % 2 == 1)
+		// if ((AbstractSingleton<TimeManager>.Instance.stepIndex) % 2 == 1)
 		// if ((AbstractSingleton<TimeManager>.Instance.stepIndex) % 4 == 1)
 
-		// if ((AbstractSingleton<TimeManager>.Instance.stepIndex + 32) % 16 == 0)
+		if ((AbstractSingleton<TimeManager>.Instance.stepIndex + 32) % 16 == 0)
 		{
+			var renderers = UnityEngine.Object.FindObjectsOfType<Renderer>();
+
+		
+
+			foreach (var r in renderers)
+			{
+				// Plugin.Logger.LogInfo($"Renderer: {r.name} ({r.GetType().Name})");
+
+				foreach (var m in r.materials)
+				{
+					if (m != null)
+					{
+						// Plugin.Logger.LogInfo($"  Mat: {m.name} | Shader: {m.shader?.name}");
+						var mpb = new MaterialPropertyBlock();
+
+						r.GetPropertyBlock(mpb);
+						var tex = mpb.GetTexture("_FXTexture") ?? r.material.GetTexture("_FXTexture") ?? Shader.GetGlobalTexture("_FXTexture");
+						if (tex != null && tex.name.StartsWith("generator fx"))
+						{
+							var t1 = mpb.GetTexture("_FXTexture")?.name ?? "null";
+							mpb.SetTexture("_FXTexture", GeneratorAny.texture);
+							var t2 = mpb.GetTexture("_FXTexture")?.name ?? "null";
+							Plugin.Logger.LogInfo($"Updated _FXTexture for {r.name} from {t1} to {t2}");
+						}
+					}
+				}
+			}
+
 			GridCell cellInDirection = base.gridCell.GetCellInDirection(base.direction);
 			if (cellInDirection.IsCellFree(base.layer))
 			{
@@ -55,12 +85,12 @@ public class GeneratorAny : ProcessingBlock
 				base.OnAction.Invoke(new BlockAction(BlockActionType.Failure, 0));
 			}
 		}
-		Plugin.Logger.LogInfo("End of GeneratorAny ExecuteActionPhase");
+		// Plugin.Logger.LogInfo("End of GeneratorAny ExecuteActionPhase");
 	}
 
-    private BlockData GetRandomUnlockedBlock()
-    {
-        // Initialize with the four ElementBlocks that have UnlockedByDefault set to true
+	private BlockData GetRandomUnlockedBlock()
+	{
+		// Initialize with the four ElementBlocks that have UnlockedByDefault set to true
 		BlocksLibrary blocksLibrary = Resources.FindObjectsOfTypeAll<BlocksLibrary>()[0];
 		var ElementBlocksField = AccessTools.Field(typeof(BlocksLibrary), "ElementBlocks");
 		BlockData[] elementBlocks = (BlockData[])ElementBlocksField.GetValue(blocksLibrary);
@@ -81,11 +111,11 @@ public class GeneratorAny : ProcessingBlock
 			.Where(block => progressManager.GetProgress(block).isChallengeCompleted)
 			.ToList()
 		);
-		
-		return list[UnityEngine.Random.Range(0, list.Count)];
-    }
 
-    protected override List<ElementBlock> GetOutputBlocks()
+		return list[UnityEngine.Random.Range(0, list.Count)];
+	}
+
+	protected override List<ElementBlock> GetOutputBlocks()
 	{
 		ElementBlock elementBlock = base.gridCell?.GetElementBlockInNeighbor(base.direction);
 		if (elementBlock != null)
@@ -134,6 +164,17 @@ public class GeneratorAny : ProcessingBlock
 
 	public override Block GetNewInstance()
 	{
+		var bytes = File.ReadAllBytes("BepInEx/plugins/FakutoriCustom/net48/generator fx any.png");
+        texture = new Texture2D(2, 2);
+        texture.LoadImage(bytes);
+		texture.name = "generator fx any";
+		
 		return new GeneratorAny();
 	}
+
+    public override void Init(GridCell gridCell, Block originalBlock, BlockStatus status, int duration, bool fromSave)
+    {
+        base.Init(gridCell, originalBlock, status, duration, fromSave);
+
+    }
 }

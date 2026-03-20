@@ -1,0 +1,107 @@
+using System.Collections.Generic;
+using Fakutori.Grid;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
+
+public abstract class MachineBlock : Block
+{
+	public Direction direction { get; protected set; } = Direction.Down;
+
+	public override BlockType blockType => BlockType.Machine;
+
+	public override int savePriority => 0;
+
+	public override bool canTurn => true;
+
+	public UnityEvent<Direction> OnTurn { get; set; } = new UnityEvent<Direction>();
+
+	public override void Init(GridCell gridCell, Block originalBlock, BlockStatus status, int duration, bool fromSave)
+	{
+		base.Init(gridCell, originalBlock, status, duration, fromSave);
+		if (originalBlock != null)
+		{
+			SetDirection((originalBlock as MachineBlock).direction);
+		}
+		AbstractSingleton<BlocksManager>.Instance.UpdateFactoryBounds();
+		AbstractSingleton<ProgressManager>.Instance.OnMachineBlockSpawned(base.blockData, base.position.ToVector3());
+		if (!fromSave)
+		{
+			AbstractSingleton<StatisticsManager>.Instance.OnSpawnMachineBlock();
+		}
+		if (gridCell != null && gridCell.isVisible)
+		{
+			SetVisible();
+		}
+	}
+
+	public virtual bool OnPlaceAsNew()
+	{
+		return false;
+	}
+
+	public void Turn(bool clockwise)
+	{
+		SetDirection(direction.Turn(clockwise));
+	}
+
+	public void Flip(bool horizontal)
+	{
+		SetDirection(direction.Flip(horizontal));
+	}
+
+	public void SetDirection(Direction direction)
+	{
+		this.direction = direction;
+		OnTurn.Invoke(direction);
+	}
+
+	public override bool Despawn()
+	{
+		AbstractSingleton<BlocksManager>.Instance.UpdateFactoryBounds();
+		return base.Despawn();
+	}
+
+	public override List<ControlShortcut> GetBlockActions(GameControls controls, bool includeAdvancedActions = true)
+	{
+		if (includeAdvancedActions)
+		{
+			controls.selectionCursor.rotateUnderCursor.performed += delegate
+			{
+				Turn(clockwise: true);
+			};
+			return new List<ControlShortcut>
+			{
+				new ControlShortcut(controls.selectionCursor.rotateUnderCursor, null, "rotate")
+			};
+		}
+		controls.selectionCursor.rotateCW.performed += delegate
+		{
+			Turn(clockwise: true);
+		};
+		controls.selectionCursor.rotateCWMouse.performed += delegate
+		{
+			Turn(clockwise: true);
+		};
+		List<ControlShortcut> list = new List<ControlShortcut>();
+		list.Add(new ControlShortcut(new InputAction[2]
+		{
+			controls.selectionCursor.rotateCWMouse,
+			controls.selectionCursor.rotateCW
+		}, null, "rotate"));
+		return list;
+	}
+
+	public override SerializedBlock SerializeBlock(bool saveAsBlueprint)
+	{
+		return new SerializedMachineBlock(base.SerializeBlock(saveAsBlueprint))
+		{
+			Direction = (int)direction
+		};
+	}
+
+	public override void DeserializeBlock(SerializedBlock block, BlockData data)
+	{
+		base.DeserializeBlock(block, data);
+		SetDirection((Direction)(block as SerializedMachineBlock).Direction);
+	}
+}

@@ -1,0 +1,93 @@
+using System.Collections.Generic;
+using Fakutori.Grid;
+using UnityEngine;
+using UnityEngine.Events;
+
+public abstract class GeneratorBlock : ProcessingBlock
+{
+	[SerializeField]
+	protected BlockData GeneratedBlock;
+
+	private const int toggleDuration = 4;
+
+	public const int frequency = 2;
+
+	public GeneratorBlock(BlockData generatedBlock)
+	{
+		GeneratedBlock = generatedBlock;
+	}
+
+	public override void ExecuteActionPhase()
+	{
+		if (!UpdateProcess())
+		{
+			return;
+		}
+		base.outputBlocks.Clear();
+		if ((AbstractSingleton<TimeManager>.Instance.stepIndex + 32) % 16 == 0)
+		{
+			GridCell cellInDirection = base.gridCell.GetCellInDirection(base.direction);
+			if (cellInDirection.IsCellFree(base.layer))
+			{
+				int num = (base.stepsDuration = 4);
+				base.stepsRemaining = num;
+				base.outputBlocks = new List<ElementBlock> { AbstractSingleton<BlocksManager>.Instance.SpawnBlock(cellInDirection, GeneratedBlock, 4, ignoreBlockOnPosition: false, AbstractSingleton<BlocksManager>.Instance.GetNewBlockStatus(GeneratedBlock)) as ElementBlock };
+				base.outputBlocks[0].onInterruptAction.AddListener(InterruptAction);
+				UnityEvent<BlockAction> onAction = base.OnAction;
+				Block[] array = base.outputBlocks.ToArray();
+				onAction.Invoke(new BlockAction(BlockActionType.Success, 4, 0, null, array));
+			}
+			else
+			{
+				base.OnAction.Invoke(new BlockAction(BlockActionType.Failure, 0));
+			}
+		}
+	}
+
+	protected override List<ElementBlock> GetOutputBlocks()
+	{
+		ElementBlock elementBlock = base.gridCell?.GetElementBlockInNeighbor(base.direction);
+		if (elementBlock != null)
+		{
+			return new List<ElementBlock> { elementBlock };
+		}
+		return new List<ElementBlock>();
+	}
+
+	public override SerializedBlock SerializeBlock(bool saveAsBlueprint)
+	{
+		return new SerializedProcessingBlock(base.SerializeBlock(saveAsBlueprint))
+		{
+			Duration = ((!saveAsBlueprint) ? base.stepsDuration : 0),
+			ElapsedSteps = ((!saveAsBlueprint) ? (4 - base.stepsRemaining) : 0)
+		};
+	}
+
+	public override void DeserializeBlock(SerializedBlock block, BlockData data)
+	{
+		base.DeserializeBlock(block, data);
+		SerializedProcessingBlock serializedProcessingBlock = block as SerializedProcessingBlock;
+		base.stepsDuration = serializedProcessingBlock.Duration;
+		base.stepsRemaining = base.stepsDuration - serializedProcessingBlock.ElapsedSteps;
+		if (base.stepsRemaining > 0)
+		{
+			base.outputBlocks = GetOutputBlocks();
+			if (base.outputBlocks.Count == 1)
+			{
+				base.outputBlocks[0].onInterruptAction.AddListener(InterruptAction);
+				UnityEvent<BlockAction> onAction = base.OnAction;
+				int num = base.stepsDuration;
+				int num2 = 4 - base.stepsRemaining;
+				Block[] array = base.outputBlocks.ToArray();
+				onAction.Invoke(new BlockAction(BlockActionType.Success, num, num2, null, array));
+			}
+		}
+	}
+
+	public override void DeserializeBlockOnClone(SerializedBlock block, BlockData data)
+	{
+		base.DeserializeBlockOnClone(block, data);
+		int num = (base.stepsRemaining = 0);
+		base.stepsDuration = num;
+	}
+}

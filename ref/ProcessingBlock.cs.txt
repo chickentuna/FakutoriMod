@@ -1,0 +1,78 @@
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
+
+public abstract class ProcessingBlock : MachineBlock
+{
+	public int stepsDuration { get; protected set; }
+
+	public int stepsRemaining { get; protected set; }
+
+	public List<ElementBlock> inputBlocks { get; protected set; } = new List<ElementBlock>();
+
+	public List<ElementBlock> outputBlocks { get; protected set; } = new List<ElementBlock>();
+
+	public UnityEvent onProcessDone { get; protected set; } = new UnityEvent();
+
+	public int elapsedDuration => stepsDuration - stepsRemaining;
+
+	protected bool UpdateProcess()
+	{
+		if (stepsRemaining > 0)
+		{
+			stepsRemaining = Mathf.Max(stepsRemaining - 1, 0);
+			if (stepsRemaining == 0 && stepsDuration > 0)
+			{
+				onProcessDone.Invoke();
+			}
+			return false;
+		}
+		return true;
+	}
+
+	public override void InterruptAction()
+	{
+		if (inputBlocks.Count <= 0 && outputBlocks.Count <= 0)
+		{
+			return;
+		}
+		bool flag = isActive;
+		List<ElementBlock> list = GetInputBlocks();
+		List<ElementBlock> list2 = GetOutputBlocks();
+		for (int i = 0; i < inputBlocks.Count; i++)
+		{
+			flag &= list.Count >= i + 1 && list[i] == inputBlocks[i];
+		}
+		for (int j = 0; j < outputBlocks.Count; j++)
+		{
+			flag &= list2.Count >= j + 1 && list2[j] == outputBlocks[j];
+		}
+		if (flag)
+		{
+			return;
+		}
+		foreach (ElementBlock inputBlock in inputBlocks)
+		{
+			inputBlock.InterruptToggle();
+		}
+		foreach (ElementBlock outputBlock in outputBlocks)
+		{
+			outputBlock.InterruptToggle();
+		}
+		inputBlocks.Clear();
+		outputBlocks.Clear();
+		stepsRemaining = 1;
+		stepsDuration = 0;
+		base.OnAction.Invoke(new BlockAction(BlockActionType.Interrupt, 0));
+	}
+
+	protected virtual List<ElementBlock> GetInputBlocks()
+	{
+		return new List<ElementBlock>();
+	}
+
+	protected virtual List<ElementBlock> GetOutputBlocks()
+	{
+		return new List<ElementBlock>();
+	}
+}

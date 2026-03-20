@@ -1,0 +1,14 @@
+public class GeneratorAir : GeneratorBlock
+{
+	public override int actionPhaseOrder => 1003;
+
+	public GeneratorAir(BlockData generatedBlock)
+		: base(generatedBlock)
+	{
+	}
+
+	public override Block GetNewInstance()
+	{
+		return new GeneratorAir(GeneratedBlock);
+	}
+}
