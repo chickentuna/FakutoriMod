@@ -32,8 +32,14 @@ public static class RecipeRandomizer
     static readonly FieldInfo F_RecipeProduct = AccessTools.Field(typeof(Recipe), "Product");
     static readonly FieldInfo F_RecipeByproduct = AccessTools.Field(typeof(Recipe), "Byproduct");
     static readonly FieldInfo F_IngredientBlock = AccessTools.Field(typeof(RecipeIngredient), "Block");
+    static readonly FieldInfo F_IngredientColor = AccessTools.Field(typeof(RecipeIngredient), "Color");
     static readonly FieldInfo F_LibFallProduct = AccessTools.Field(typeof(BlocksLibrary), "FallProduct");
     static readonly FieldInfo F_LibRiseProduct = AccessTools.Field(typeof(BlocksLibrary), "RiseProduct");
+
+    // The wildcard colour slot ("Rainbow needs 7 distinct colours", "Quartz needs any 1") is a
+    // BlockColor sentinel that no real block carries, so RecipeIngredient.IsBlockMatching never
+    // matches it. Such slots are satisfied by distinct-colour count instead (see EdgeActive).
+    const string AnyColorName = "Any color";
 
     static readonly (string field, Recipe.RecipeType type)[] TreeFields =
     {
@@ -90,7 +96,7 @@ public static class RecipeRandomizer
         public bool combinerSlots;                  // Combine/Rainbow -> property/color/any slots need combinable blocks
         public readonly List<BlockData> blockReqs = new();
         public readonly List<(BlockProperty prop, int qty)> propReqs = new();
-        public readonly List<(RecipeIngredient ing, int qty)> colorReqs = new();
+        public readonly List<(RecipeIngredient ing, int qty, bool anyColor)> colorReqs = new();
         public readonly List<int> anyReqs = new();
         public readonly List<BlockProperty> typeProps = new();
         public bool rainbow;
@@ -191,7 +197,8 @@ public static class RecipeRandomizer
                     e.propReqs.Add((ing.property, Math.Max(1, ing.quantity)));
                     break;
                 case RecipeIngredient.RecipeIngredientType.Color:
-                    e.colorReqs.Add((ing, Math.Max(1, ing.quantity)));
+                    var col = F_IngredientColor.GetValue(ing) as BlockColor;
+                    e.colorReqs.Add((ing, Math.Max(1, ing.quantity), col == null || col.colorName == AnyColorName));
                     break;
                 default:
                     e.anyReqs.Add(Math.Max(1, ing.quantity));
@@ -276,11 +283,15 @@ public static class RecipeRandomizer
         // Combiner ingredient slots (Combine/Rainbow) only accept combinable blocks; catalysts for
         // other in-world mechanics may be anything reachable.
         int CountSlot(Func<BlockData, bool> pred) => reach.Count(b => (!e.combinerSlots || IsCombinable(b)) && pred(b));
+        int DistinctSlotColors() => reach.Where(b => !e.combinerSlots || IsCombinable(b))
+                                         .Select(b => b.color).Where(c => c != null).Distinct().Count();
         foreach (var (prop, qty) in e.propReqs) if (CountSlot(b => b.HasProperty(prop)) < qty) return false;
         foreach (var tp in e.typeProps) if (reach.Count(b => b.HasProperty(tp)) < 1) return false;   // catalyst: any reachable
         foreach (var q in e.anyReqs) if (CountSlot(_ => true) < q) return false;
-        foreach (var (ing, qty) in e.colorReqs) if (CountSlot(ing.IsBlockMatching) < qty) return false;
-        if (e.rainbow && reach.Where(IsCombinable).Select(b => b.color).Where(c => c != null).Distinct().Count() < 7) return false;
+        // "Any colour" slots need `qty` distinct reachable colours; specific colours match by block.
+        foreach (var (ing, qty, anyColor) in e.colorReqs)
+            if (anyColor ? DistinctSlotColors() < qty : CountSlot(ing.IsBlockMatching) < qty) return false;
+        if (e.rainbow && DistinctSlotColors() < 7) return false;
         return true;
     }
 
@@ -301,6 +312,65 @@ public static class RecipeRandomizer
             }
         }
         return productPool.All(p => reach.Contains(p));
+    }
+
+    // TEMP DIAGNOSTIC: when the vanilla (identity) graph fails reachability, run the BFS once more
+    // with identity rho/sigma and report which pool products are stranded and the first failing
+    // requirement of every recipe that never fired. Logging only — remove once the model is fixed.
+    static void DiagnoseVanilla()
+    {
+        var rho = Enumerable.Range(0, ingredientPool.Length).ToArray();
+        var sigma = Enumerable.Range(0, productPool.Length).ToArray();
+        reach = new HashSet<BlockData>(sources);
+        var done = new bool[edges.Length];
+        bool changed = true;
+        while (changed)
+        {
+            changed = false;
+            for (int i = 0; i < edges.Length; i++)
+            {
+                if (done[i] || !EdgeActive(edges[i], rho)) continue;
+                done[i] = true; changed = true;
+                var p = edges[i].product;
+                reach.Add(p != null && productIndex.TryGetValue(p, out var pi) ? productPool[sigma[pi]] : p);
+            }
+        }
+        var missing = productPool.Where(p => !reach.Contains(p)).ToList();
+        Plugin.Logger.LogWarning($"DIAG: sources={sources.Count}, reached={reach.Count}, " +
+                                 $"unreachable pool products={missing.Count}: " +
+                                 string.Join(", ", missing.Select(b => b.name)));
+        for (int i = 0; i < edges.Length; i++)
+            if (!done[i])
+            {
+                var pn = edges[i].product?.name ?? "(null)";
+                Plugin.Logger.LogWarning($"DIAG: unfired [{edges[i].recipe.type}] -> {pn}: {WhyInactive(edges[i], rho)}");
+            }
+    }
+
+    static string WhyInactive(Edge e, int[] rho)
+    {
+        foreach (var b in e.blockReqs)
+        {
+            var need = e.remapInputs ? ingredientPool[rho[idToRhoSlot[b.blockId]]] : b;
+            if (!reach.Contains(need)) return $"block '{need?.name}' not reachable";
+        }
+        int CountSlot(Func<BlockData, bool> pred) => reach.Count(b => (!e.combinerSlots || IsCombinable(b)) && pred(b));
+        int DistinctSlotColors() => reach.Where(b => !e.combinerSlots || IsCombinable(b))
+                                         .Select(b => b.color).Where(c => c != null).Distinct().Count();
+        foreach (var (prop, qty) in e.propReqs)
+            if (CountSlot(b => b.HasProperty(prop)) < qty)
+                return $"property {prop} x{qty}: have {CountSlot(b => b.HasProperty(prop))} (combinerSlots={e.combinerSlots})";
+        foreach (var tp in e.typeProps)
+            if (reach.Count(b => b.HasProperty(tp)) < 1) return $"catalyst {tp} absent in reach";
+        foreach (var q in e.anyReqs)
+            if (CountSlot(_ => true) < q) return $"any x{q}: have {CountSlot(_ => true)}";
+        foreach (var (ing, qty, anyColor) in e.colorReqs)
+            if (anyColor ? DistinctSlotColors() < qty : CountSlot(ing.IsBlockMatching) < qty)
+                return anyColor ? $"any-color x{qty}: have {DistinctSlotColors()} distinct colours"
+                                : $"color x{qty}: have {CountSlot(ing.IsBlockMatching)} matching (ingType={ing.ingredientType})";
+        if (e.rainbow && DistinctSlotColors() < 7)
+            return $"rainbow: only {DistinctSlotColors()} colours";
+        return "active?? (no failing requirement found)";
     }
 
     static bool Hazardous(int[] rho)
@@ -331,7 +401,10 @@ public static class RecipeRandomizer
         var sigma = Enumerable.Range(0, productPool.Length).ToArray();
 
         if (!FullyReachable(rho, sigma))
+        {
             Plugin.Logger.LogWarning("RecipeRandomizer: vanilla graph not fully reachable in our model.");
+            DiagnoseVanilla();
+        }
 
         int accepted = 0, iters = 12 * (rho.Length + sigma.Length);
         for (int k = 0; k < iters; k++)
