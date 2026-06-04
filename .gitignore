@@ -60,3 +60,11 @@ nunit-*.xml
 
 # Python venv for asset extraction tooling
 .venv/
+
+# Generated recipe-tree images (regenerate with tools/recipe_tree_image.py)
+ref/recipe_tree.png
+ref/recipe_tree.svg
+
+# Python bytecode caches
+__pycache__/
+*.pyc

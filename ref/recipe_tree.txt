@@ -1,0 +1,69 @@
+COMBINE — 34 recipes as a trie (ingredients sorted; <prop>, [color]; leaf → product)
+combiner
+├─ <Energy>
+│  └─ <Energy>  → Entropy
+├─ <Raw element>
+│  └─ <Raw element>
+│     └─ Ether  → Magic
+├─ Air
+│  ├─ Earth  → Dust
+│  ├─ Fire 1  → Smoke
+│  ├─ Lava  → Stone
+│  ├─ Stone  → Sand
+│  └─ Water  → Fizzy water
+├─ Coal
+│  ├─ Copper
+│  │  └─ Fire 1  → Iron
+│  ├─ Fire 1
+│  │  └─ Meteorite  → Copper
+│  ├─ Fire 2
+│  │  └─ Iron  → Silver
+│  └─ Fire 3
+│     └─ Silver  → Gold
+├─ Darkness
+│  └─ Entropy
+│     └─ Entropy
+│        └─ Light  → Antimatter
+├─ Earth
+│  ├─ Fire 1  → Lava
+│  ├─ Time
+│  │  └─ Time
+│  │     └─ Wood  → Oil
+│  └─ Water  → Wood
+├─ Electricity
+│  └─ Fire 3  → Plasma
+├─ Fire 1
+│  └─ Water  → Steam
+├─ Fizzy water
+│  └─ Smoke  → Acid
+├─ Luck
+│  └─ Luck
+│     └─ Stone  → Ruby
+├─ Magic
+│  ├─ [Black]
+│  │  └─ [Black]  → Darkness
+│  └─ [White]
+│     └─ [White]  → Light
+├─ Sand
+│  └─ Time  → Quartz
+│     ├─ [Black]  → Quartz black
+│     ├─ [Blue]  → Quartz blue
+│     ├─ [Brown]  → Quartz brown
+│     ├─ [Green]  → Quartz green
+│     ├─ [Grey]  → Quartz grey
+│     ├─ [Orange]  → Quartz orange
+│     ├─ [Pink]  → Quartz pink
+│     ├─ [Purple]  → Quartz purple
+│     ├─ [Red]  → Quartz red
+│     ├─ [White]  → Quartz white
+│     └─ [Yellow]  → Quartz yellow
+└─ Stone
+   └─ Water  → Sand
+
+COMBUST — 2 single-block recipes
+  Wood             → Coal
+  Oil              → Smoke
+
+STARSTRUCK — 2 single-block recipes
+  Air              → Luck
+  Earth            → Meteorite
