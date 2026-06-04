@@ -1,0 +1,56 @@
+54 recipes extracted from /home/jpn/.steam/debian-installation/steamapps/common/Fakutori Playtest/Fakutori_Data
+
+[BlackHole    ] 9x Antimatter  ->  Black hole
+[Combine      ] Fizzy water + Smoke  ->  Acid
+[Combine      ] Light + Darkness + 2x Entropy  ->  Antimatter   [$200 m0 t0 p1.0]
+[Combine      ] Meteorite + Fire 1 + Coal  ->  Copper
+[Combine      ] 2x [Black] + Magic  ->  Darkness   [$0 m100 t0 p1.0]
+[Combine      ] Earth + Air  ->  Dust
+[Combine      ] 2x <Energy>  ->  Entropy
+[Combine      ] Water + Air  ->  Fizzy water
+[Combine      ] Silver + Fire 3 + Coal  ->  Gold
+[Combine      ] Copper + Fire 1 + Coal  ->  Iron
+[Combine      ] Fire 1 + Earth  ->  Lava
+[Combine      ] 2x [White] + Magic  ->  Light   [$0 m100 t0 p1.0]
+[Combine      ] 2x <Raw element> + Ether  ->  Magic
+[Combine      ] Wood + Earth + 2x Time  ->  Oil   [$0 m0 t2 p1.0]
+[Combine      ] Fire 3 + Electricity  ->  Plasma
+[Combine      ] Sand + Time + [Any color]  ->  Quartz
+[Combine      ] Sand + Time  ->  Quartz   [$0 m0 t1 p1.0]
+[Combine      ] Sand + Time + [Black]  ->  Quartz black   [$0 m0 t1 p1.0]
+[Combine      ] Sand + Time + [Blue]  ->  Quartz blue   [$0 m0 t1 p1.0]
+[Combine      ] Sand + Time + [Brown]  ->  Quartz brown   [$0 m0 t1 p1.0]
+[Combine      ] Sand + Time + [Green]  ->  Quartz green   [$0 m0 t1 p1.0]
+[Combine      ] Sand + Time + [Grey]  ->  Quartz grey   [$0 m0 t1 p1.0]
+[Combine      ] Sand + Time + [Orange]  ->  Quartz orange   [$0 m0 t1 p1.0]
+[Combine      ] Sand + Time + [Pink]  ->  Quartz pink   [$0 m0 t1 p1.0]
+[Combine      ] Sand + Time + [Purple]  ->  Quartz purple   [$0 m0 t1 p1.0]
+[Combine      ] Sand + Time + [Red]  ->  Quartz red   [$0 m0 t1 p1.0]
+[Combine      ] Sand + Time + [White]  ->  Quartz white   [$0 m0 t1 p1.0]
+[Combine      ] Sand + Time + [Yellow]  ->  Quartz yellow   [$0 m0 t1 p1.0]
+[Combine      ] Stone + 2x Luck  ->  Ruby  ~Dust   [$0 m0 t0 p0.25]
+[Combine      ] Stone + Air  ->  Sand
+[Combine      ] Stone + Water  ->  Sand
+[Combine      ] Iron + Fire 2 + Coal  ->  Silver
+[Combine      ] Fire 1 + Air  ->  Smoke
+[Combine      ] Water + Fire 1  ->  Steam
+[Combine      ] Lava + Air  ->  Stone
+[Combine      ] Water + Earth  ->  Wood
+[Combust      ] Wood  ->  Coal
+[Combust      ] Oil  ->  Smoke
+[DissolveMetals] 2x <Metal> + Acid  ->  Electricity
+[EvolvingFire ] Fire 1  ->  Fire 2
+[EvolvingFire ] Fire 2  ->  Fire 3
+[Fall         ] <Aerial>  ->  Ether
+[Fall         ] <Weighty>  ->  Shooting star
+[Generator    ] Generator air  ->  Air
+[Generator    ] Generator earth  ->  Earth
+[Generator    ] Generator fire  ->  Fire 1
+[Generator    ] Generator water  ->  Water
+[Quasar       ] Black hole + Anything  ->  Quasar
+[Quickening   ] Silver  ->  Mercury
+[Rainbow      ] 7x [Any color]  ->  Rainbow
+[Starstruck   ] Air  ->  Luck
+[Starstruck   ] Earth  ->  Meteorite
+[Time         ] Ether  ->  Time
+[Void         ] <any>  ->  Void

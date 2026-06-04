@@ -1,0 +1,55 @@
+BUILD ORDER  —  seed 12345
+Goal: craft one of every block (47 shuffled products)
+
+Start with (generators + default-unlocked, never shuffled):
+  Air, Anything, Conveyor, Earth, Fire 1, Generator air, Generator earth, Generator fire, Generator water, Wall, Water
+
+   1. combine          Earth + Air                            ->  Meteorite
+   2. combine          Water + Air                            ->  Quartz blue
+   3. combine          Fire 1 + Earth                         ->  Fire 2
+   4. combine          Fire 1 + Air                           ->  Antimatter
+   5. combine          Water + Fire 1                         ->  Coal
+   6. combine          Water + Earth                          ->  Quartz purple
+   7. let fall/rise    <Weighty>                              ->  Void
+   8. combine          7x [Any color]                         ->  Fizzy water
+   9. touch antimatter to <any>                                  ->  Darkness
+  10. arrange          9x Antimatter                          ->  Wood
+  11. combine          Meteorite + Fire 1 + Coal              ->  Sand
+  12. combine          2x <Energy>                            ->  Gold
+  13. burn             Wood                                   ->  Acid
+  14. evolve fire from Fire 1                                 ->  Oil
+  15. evolve fire from Fire 2                                 ->  Time
+  16. combine          Wood + Earth + 2x Time                 ->  Lava
+  17. combine          Sand + Time + [Any color]              ->  Magic
+  18. combine          Sand + Time + [Black]                  ->  Quartz brown
+  19. combine          Sand + Time + [Blue]                   ->  Quartz grey
+  20. combine          Sand + Time + [Brown]                  ->  Smoke
+  21. combine          Sand + Time + [Green]                  ->  Entropy
+  22. combine          Sand + Time + [Grey]                   ->  Electricity
+  23. combine          Sand + Time + [Orange]                 ->  Steam
+  24. combine          Sand + Time + [Pink]                   ->  Copper
+  25. combine          Sand + Time + [Purple]                 ->  Quartz red
+  26. combine          Sand + Time + [Red]                    ->  Quartz orange
+  27. combine          Sand + Time + [White]                  ->  Stone
+  28. combine          Sand + Time + [Yellow]                 ->  Ether
+  29. combine          Stone + Air                            ->  Ruby
+  30. combine          Lava + Air                             ->  Quartz yellow
+  31. dissolve         2x <Metal> + Acid                      ->  Quartz black
+  32. let fall/rise    <Aerial>                               ->  Shooting star
+  33. drop a star on   Air                                    ->  Quasar
+  34. drop a star on   Earth                                  ->  Plasma
+  35. let sit          Ether                                  ->  Luck
+  36. combine          Fizzy water + Smoke                    ->  Quartz green
+  37. combine          2x [Black] + Magic                     ->  Iron
+  38. combine          Copper + Fire 1 + Coal                 ->  Rainbow
+  39. combine          2x [White] + Magic                     ->  Silver
+  40. combine          2x <Raw element> + Ether               ->  Quartz
+  41. combine          Stone + 2x Luck                        ->  Fire 3
+  42. combine          Iron + Fire 2 + Coal                   ->  Quartz white
+  43. quicken          Silver                                 ->  Black hole
+  44. combine          Silver + Fire 3 + Coal                 ->  Quartz pink
+  45. combine          Fire 3 + Electricity                   ->  Light
+  46. feed             Black hole + Anything                  ->  Mercury
+  47. combine          Light + Darkness + 2x Entropy          ->  Dust
+
+All 47 blocks crafted in 47 steps. Nothing left out.

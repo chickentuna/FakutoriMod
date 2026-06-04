@@ -1,0 +1,109 @@
+Sources (vanilla, never shuffled): 11
+Shuffle pool (blocks remapped): 47
+Recipe edges: 50
+
+==============================================================================
+SEED 12345   reachable=ALL OK   remapped 47/47   (377 swaps kept)
+==============================================================================
+
+-- Scrambled recipe book (ingredients are unchanged; products are shuffled) --
+  [BlackHole    ] 9x Antimatter                            ->  Wood
+  [Combine      ] Fire 1 + Air                             ->  Antimatter
+  [Combine      ] Water + Fire 1                           ->  Coal
+  [Combine      ] Sand + Time + [Pink]                     ->  Copper
+  [Combine      ] Light + Darkness + 2x Entropy            ->  Dust
+  [Combine      ] Sand + Time + [Grey]                     ->  Electricity
+  [Combine      ] Sand + Time + [Green]                    ->  Entropy
+  [Combine      ] Sand + Time + [Yellow]                   ->  Ether
+  [Combine      ] Fire 1 + Earth                           ->  Fire 2
+  [Combine      ] Stone + 2x Luck                          ->  Fire 3  ~Meteorite
+  [Combine      ] 2x <Energy>                              ->  Gold
+  [Combine      ] 2x [Black] + Magic                       ->  Iron
+  [Combine      ] Wood + Earth + 2x Time                   ->  Lava
+  [Combine      ] Fire 3 + Electricity                     ->  Light
+  [Combine      ] Sand + Time + [Any color]                ->  Magic
+  [Combine      ] Sand + Time                              ->  Magic
+  [Combine      ] Earth + Air                              ->  Meteorite
+  [Combine      ] 2x <Raw element> + Ether                 ->  Quartz
+  [Combine      ] Water + Air                              ->  Quartz blue
+  [Combine      ] Sand + Time + [Black]                    ->  Quartz brown
+  [Combine      ] Fizzy water + Smoke                      ->  Quartz green
+  [Combine      ] Sand + Time + [Blue]                     ->  Quartz grey
+  [Combine      ] Sand + Time + [Red]                      ->  Quartz orange
+  [Combine      ] Silver + Fire 3 + Coal                   ->  Quartz pink
+  [Combine      ] Water + Earth                            ->  Quartz purple
+  [Combine      ] Sand + Time + [Purple]                   ->  Quartz red
+  [Combine      ] Iron + Fire 2 + Coal                     ->  Quartz white
+  [Combine      ] Lava + Air                               ->  Quartz yellow
+  [Combine      ] Copper + Fire 1 + Coal                   ->  Rainbow
+  [Combine      ] Stone + Air                              ->  Ruby
+  [Combine      ] Stone + Water                            ->  Ruby
+  [Combine      ] Meteorite + Fire 1 + Coal                ->  Sand
+  [Combine      ] 2x [White] + Magic                       ->  Silver
+  [Combine      ] Sand + Time + [Brown]                    ->  Smoke
+  [Combine      ] Sand + Time + [Orange]                   ->  Steam
+  [Combine      ] Sand + Time + [White]                    ->  Stone
+  [Combust      ] Wood                                     ->  Acid
+  [Combust      ] Oil                                      ->  Antimatter
+  [DissolveMetals] 2x <Metal> + Acid                        ->  Quartz black
+  [EvolvingFire ] Fire 1                                   ->  Oil
+  [EvolvingFire ] Fire 2                                   ->  Time
+  [Fall         ] <Aerial>                                 ->  Shooting star
+  [Fall         ] <Weighty>                                ->  Void
+  [Quasar       ] Black hole + Anything                    ->  Mercury
+  [Quickening   ] Silver                                   ->  Black hole
+  [Rainbow      ] 7x [Any color]                           ->  Fizzy water
+  [Starstruck   ] Earth                                    ->  Plasma
+  [Starstruck   ] Air                                      ->  Quasar
+  [Time         ] Ether                                    ->  Luck
+  [Void         ] <any>                                    ->  Darkness
+
+-- Product remapping (what each block now comes out as) --
+  Acid               ->  Quartz green
+  Antimatter         ->  Dust
+  Black hole         ->  Wood
+  Coal               ->  Acid
+  Copper             ->  Sand
+  Darkness           ->  Iron
+  Dust               ->  Meteorite
+  Electricity        ->  Quartz black
+  Entropy            ->  Gold
+  Ether              ->  Shooting star
+  Fire 2             ->  Oil
+  Fire 3             ->  Time
+  Fizzy water        ->  Quartz blue
+  Gold               ->  Quartz pink
+  Iron               ->  Rainbow
+  Lava               ->  Fire 2
+  Light              ->  Silver
+  Luck               ->  Quasar
+  Magic              ->  Quartz
+  Mercury            ->  Black hole
+  Meteorite          ->  Plasma
+  Oil                ->  Lava
+  Plasma             ->  Light
+  Quartz             ->  Magic
+  Quartz black       ->  Quartz brown
+  Quartz blue        ->  Quartz grey
+  Quartz brown       ->  Smoke
+  Quartz green       ->  Entropy
+  Quartz grey        ->  Electricity
+  Quartz orange      ->  Steam
+  Quartz pink        ->  Copper
+  Quartz purple      ->  Quartz red
+  Quartz red         ->  Quartz orange
+  Quartz white       ->  Stone
+  Quartz yellow      ->  Ether
+  Quasar             ->  Mercury
+  Rainbow            ->  Fizzy water
+  Ruby               ->  Fire 3
+  Sand               ->  Ruby
+  Shooting star      ->  Void
+  Silver             ->  Quartz white
+  Smoke              ->  Antimatter
+  Steam              ->  Coal
+  Stone              ->  Quartz yellow
+  Time               ->  Luck
+  Void               ->  Darkness
+  Wood               ->  Quartz purple
+

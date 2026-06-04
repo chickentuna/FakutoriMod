@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>E:\SteamLibrary\steamapps\common\Fakutori Demo\BepInEx\plugins\$(AssemblyName)</OutputPath>
+    <OutputPath>/home/jpn/.steam/debian-installation/steamapps/common/Fakutori Demo/BepInEx/plugins/$(AssemblyName)</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,0 +1,1355 @@
+{
+  "source": "/home/jpn/.steam/debian-installation/steamapps/common/Fakutori Playtest/Fakutori_Data",
+  "count": 54,
+  "recipes": [
+    {
+      "asset": "Black hole",
+      "type": "BlackHole",
+      "product": "Black hole",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 9,
+          "block": "Antimatter"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Acid",
+      "type": "Combine",
+      "product": "Acid",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Fizzy water"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Smoke"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Antimatter",
+      "type": "Combine",
+      "product": "Antimatter",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Light"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Darkness"
+        },
+        {
+          "type": "Block",
+          "quantity": 2,
+          "block": "Entropy"
+        }
+      ],
+      "cost": {
+        "money": 200,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Copper",
+      "type": "Combine",
+      "product": "Copper",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Meteorite"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Fire 1"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Coal"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Darkness",
+      "type": "Combine",
+      "product": "Darkness",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Color",
+          "quantity": 2,
+          "color": "Black"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Magic"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 100,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Dust",
+      "type": "Combine",
+      "product": "Dust",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Earth"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Air"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Entropy",
+      "type": "Combine",
+      "product": "Entropy",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Property",
+          "quantity": 2,
+          "property": "Energy"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Fizzy water",
+      "type": "Combine",
+      "product": "Fizzy water",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Water"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Air"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Gold",
+      "type": "Combine",
+      "product": "Gold",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Silver"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Fire 3"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Coal"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Iron",
+      "type": "Combine",
+      "product": "Iron",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Copper"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Fire 1"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Coal"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Lava",
+      "type": "Combine",
+      "product": "Lava",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Fire 1"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Earth"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Light",
+      "type": "Combine",
+      "product": "Light",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Color",
+          "quantity": 2,
+          "color": "White"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Magic"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 100,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Magic",
+      "type": "Combine",
+      "product": "Magic",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Property",
+          "quantity": 2,
+          "property": "Raw element"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Ether"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Oil",
+      "type": "Combine",
+      "product": "Oil",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Wood"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Earth"
+        },
+        {
+          "type": "Block",
+          "quantity": 2,
+          "block": "Time"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 2,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Plasma",
+      "type": "Combine",
+      "product": "Plasma",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Fire 3"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Electricity"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Quartz color",
+      "type": "Combine",
+      "product": "Quartz",
+      "byproduct": null,
+      "displayOnly": true,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 0,
+          "block": "Sand"
+        },
+        {
+          "type": "Block",
+          "quantity": 0,
+          "block": "Time"
+        },
+        {
+          "type": "Color",
+          "quantity": 0,
+          "color": "Any color"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Quartz",
+      "type": "Combine",
+      "product": "Quartz",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Sand"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Time"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 1,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Quartz black",
+      "type": "Combine",
+      "product": "Quartz black",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Sand"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Time"
+        },
+        {
+          "type": "Color",
+          "quantity": 1,
+          "color": "Black"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 1,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Quartz blue",
+      "type": "Combine",
+      "product": "Quartz blue",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Sand"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Time"
+        },
+        {
+          "type": "Color",
+          "quantity": 1,
+          "color": "Blue"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 1,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Quartz brown",
+      "type": "Combine",
+      "product": "Quartz brown",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Sand"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Time"
+        },
+        {
+          "type": "Color",
+          "quantity": 1,
+          "color": "Brown"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 1,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Quartz green",
+      "type": "Combine",
+      "product": "Quartz green",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Sand"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Time"
+        },
+        {
+          "type": "Color",
+          "quantity": 1,
+          "color": "Green"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 1,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Quartz grey",
+      "type": "Combine",
+      "product": "Quartz grey",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Sand"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Time"
+        },
+        {
+          "type": "Color",
+          "quantity": 1,
+          "color": "Grey"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 1,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Quartz orange",
+      "type": "Combine",
+      "product": "Quartz orange",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Sand"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Time"
+        },
+        {
+          "type": "Color",
+          "quantity": 1,
+          "color": "Orange"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 1,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Quartz pink",
+      "type": "Combine",
+      "product": "Quartz pink",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Sand"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Time"
+        },
+        {
+          "type": "Color",
+          "quantity": 1,
+          "color": "Pink"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 1,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Quartz purplle",
+      "type": "Combine",
+      "product": "Quartz purple",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Sand"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Time"
+        },
+        {
+          "type": "Color",
+          "quantity": 1,
+          "color": "Purple"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 1,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Quartz red",
+      "type": "Combine",
+      "product": "Quartz red",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Sand"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Time"
+        },
+        {
+          "type": "Color",
+          "quantity": 1,
+          "color": "Red"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 1,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Quartz white",
+      "type": "Combine",
+      "product": "Quartz white",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Sand"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Time"
+        },
+        {
+          "type": "Color",
+          "quantity": 1,
+          "color": "White"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 1,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Quartz yellow",
+      "type": "Combine",
+      "product": "Quartz yellow",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Sand"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Time"
+        },
+        {
+          "type": "Color",
+          "quantity": 1,
+          "color": "Yellow"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 1,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Ruby",
+      "type": "Combine",
+      "product": "Ruby",
+      "byproduct": "Dust",
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Stone"
+        },
+        {
+          "type": "Block",
+          "quantity": 2,
+          "block": "Luck"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 0.25
+      }
+    },
+    {
+      "asset": "Sand 1",
+      "type": "Combine",
+      "product": "Sand",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Stone"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Air"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Sand 2",
+      "type": "Combine",
+      "product": "Sand",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Stone"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Water"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Silver",
+      "type": "Combine",
+      "product": "Silver",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Iron"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Fire 2"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Coal"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Smoke",
+      "type": "Combine",
+      "product": "Smoke",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Fire 1"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Air"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Steam",
+      "type": "Combine",
+      "product": "Steam",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Water"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Fire 1"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Stone",
+      "type": "Combine",
+      "product": "Stone",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Lava"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Air"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Wood",
+      "type": "Combine",
+      "product": "Wood",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Water"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Earth"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Coal",
+      "type": "Combust",
+      "product": "Coal",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Wood"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Smoke combustion",
+      "type": "Combust",
+      "product": "Smoke",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Oil"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Electricity",
+      "type": "DissolveMetals",
+      "product": "Electricity",
+      "byproduct": null,
+      "displayOnly": true,
+      "ingredients": [
+        {
+          "type": "Property",
+          "quantity": 2,
+          "property": "Metal"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Acid"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Fire 2",
+      "type": "EvolvingFire",
+      "product": "Fire 2",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Fire 1"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Fire 3",
+      "type": "EvolvingFire",
+      "product": "Fire 3",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Fire 2"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Ether",
+      "type": "Fall",
+      "product": "Ether",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Property",
+          "quantity": 1,
+          "property": "Aerial"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Shooting star",
+      "type": "Fall",
+      "product": "Shooting star",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Property",
+          "quantity": 1,
+          "property": "Weighty"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Air",
+      "type": "Generator",
+      "product": "Air",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Generator air"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Earth",
+      "type": "Generator",
+      "product": "Earth",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Generator earth"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Fire",
+      "type": "Generator",
+      "product": "Fire 1",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Generator fire"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Water",
+      "type": "Generator",
+      "product": "Water",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Generator water"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Quasar",
+      "type": "Quasar",
+      "product": "Quasar",
+      "byproduct": null,
+      "displayOnly": true,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Black hole"
+        },
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Anything"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Mercury",
+      "type": "Quickening",
+      "product": "Mercury",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Silver"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Rainbow",
+      "type": "Rainbow",
+      "product": "Rainbow",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Color",
+          "quantity": 7,
+          "color": "Any color"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Luck",
+      "type": "Starstruck",
+      "product": "Luck",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Air"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Meteorite",
+      "type": "Starstruck",
+      "product": "Meteorite",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Earth"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Time",
+      "type": "Time",
+      "product": "Time",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Block",
+          "quantity": 1,
+          "block": "Ether"
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    },
+    {
+      "asset": "Void",
+      "type": "Void",
+      "product": "Void",
+      "byproduct": null,
+      "displayOnly": false,
+      "ingredients": [
+        {
+          "type": "Any",
+          "quantity": 1
+        }
+      ],
+      "cost": {
+        "money": 0,
+        "mana": 0,
+        "time": 0,
+        "probability": 1.0
+      }
+    }
+  ]
+}
