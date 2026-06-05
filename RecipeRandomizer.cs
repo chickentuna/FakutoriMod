@@ -75,6 +75,10 @@ public static class RecipeRandomizer
     static Edge[] edges;
     static readonly List<ProductSlot> productSlots = new();   // recipe product/byproduct + hardcoded fields + fall/rise
     static readonly List<TreeSnap> treeSnaps = new();         // pristine tree paths per tree field
+    // Pristine original blockId per ingredient slot (-1 for non-block slots). Apply() mutates the live
+    // RecipeIngredient.Block in place, so it must NOT re-read it as input on a later re-apply — both the
+    // tree-relabel multiset and the compendium update derive from this snapshot instead.
+    static readonly Dictionary<Recipe, int[]> pristineIngBlockIds = new();
 
     public static int? CurrentSeed { get; private set; }
 
@@ -161,6 +165,7 @@ public static class RecipeRandomizer
             if (r == null) continue;
             CaptureProductSlots(r);
             if (r.type == Recipe.RecipeType.Generator) continue;
+            CaptureIngredientIds(r);
             edgeList.Add(BuildEdge(r, treeTypes));
         }
         edges = edgeList.ToArray();
@@ -215,6 +220,16 @@ public static class RecipeRandomizer
         var rr = r;
         productSlots.Add(new ProductSlot { original = r.product, set = v => F_RecipeProduct.SetValue(rr, v) });
         productSlots.Add(new ProductSlot { original = r.byproduct, set = v => F_RecipeByproduct.SetValue(rr, v) });
+    }
+
+    static void CaptureIngredientIds(Recipe r)
+    {
+        var ings = r.ingredients ?? Array.Empty<RecipeIngredient>();
+        var ids = new int[ings.Length];
+        for (int i = 0; i < ings.Length; i++)
+            ids[i] = (ings[i].ingredientType == RecipeIngredient.RecipeIngredientType.Block && ings[i].block != null)
+                ? ings[i].block.blockId : -1;
+        pristineIngBlockIds[r] = ids;
     }
 
     static void CaptureControllerAndLibFields()
@@ -391,10 +406,20 @@ public static class RecipeRandomizer
     //  Apply
     // ===================================================================================
 
+    static bool appliedOnce;
+
     public static void Apply(int seed)
     {
         EnsureCaptured();
         if (!captured) { CurrentSeed = seed; return; }
+
+        // Apply() is re-entrant: it rebuilds everything from the pristine snapshots (treeSnaps,
+        // productSlots[].original, pristineIngBlockIds), so re-applying — same seed or a new one —
+        // is well-defined. Log it so a stale-compendium report is easy to correlate.
+        if (appliedOnce)
+            Plugin.Logger.LogInfo($"RecipeRandomizer: re-applying (seed {seed}, was {CurrentSeed}) — " +
+                                  "rebuilding recipes from pristine snapshot.");
+        appliedOnce = true;
 
         var rng = new System.Random(seed);
         var rho = Enumerable.Range(0, ingredientPool.Length).ToArray();
@@ -432,11 +457,13 @@ public static class RecipeRandomizer
         foreach (var e in edges.Where(e => e.remapInputs))
         {
             var cnt = new Dictionary<int, int>();
-            foreach (var ing in e.recipe.ingredients)
-                if (ing.ingredientType == RecipeIngredient.RecipeIngredientType.Block && ing.block != null)
+            var ings = e.recipe.ingredients;
+            var ids = pristineIngBlockIds[e.recipe];   // pristine ids: never the previous apply's output
+            for (int i = 0; i < ings.Length; i++)
+                if (ids[i] >= 0)
                 {
-                    cnt.TryGetValue(ing.block.blockId, out var c);
-                    cnt[ing.block.blockId] = c + Math.Max(1, ing.quantity);
+                    cnt.TryGetValue(ids[i], out var c);
+                    cnt[ids[i]] = c + Math.Max(1, ings[i].quantity);
                 }
             blockCounts[e.recipe] = cnt;
         }
@@ -462,11 +489,16 @@ public static class RecipeRandomizer
             snap.field.SetValue(lib, root);
         }
 
-        // keep RecipeIngredient.Block consistent with the relabelled tree (for the compendium)
+        // keep RecipeIngredient.Block consistent with the relabelled tree (for the compendium). Map from
+        // the pristine id, not the live ing.block — on a re-apply the latter is already this run's input.
         foreach (var e in edges.Where(e => e.remapInputs))
-            foreach (var ing in e.recipe.ingredients)
-                if (ing.ingredientType == RecipeIngredient.RecipeIngredientType.Block && ing.block != null)
-                    F_IngredientBlock.SetValue(ing, lib.GetBlockDataById(MapId(ing.block.blockId)));
+        {
+            var ings = e.recipe.ingredients;
+            var ids = pristineIngBlockIds[e.recipe];
+            for (int i = 0; i < ings.Length; i++)
+                if (ids[i] >= 0)
+                    F_IngredientBlock.SetValue(ings[i], lib.GetBlockDataById(MapId(ids[i])));
+        }
 
         CurrentSeed = seed;
         int im = ingredientPool.Where((b, i) => rho[i] != i).Count();
