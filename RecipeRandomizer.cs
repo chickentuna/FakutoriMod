@@ -68,6 +68,7 @@ public static class RecipeRandomizer
     static bool captured;
     static BlocksLibrary lib;
     static HashSet<BlockData> sources;
+    static HashSet<BlockData> colorFamilyProducts;  // pinned out of sigma (Quartz family — see DetectColorFamilyProducts)
     static BlockData[] productPool;                 // sigma domain
     static Dictionary<BlockData, int> productIndex;
     static BlockData[] ingredientPool;              // rho domain
@@ -133,7 +134,8 @@ public static class RecipeRandomizer
 
         bool IsMachine(BlockData b) => b != null && b.category != null && b.category.isMachine;
         bool ShufflableProduct(BlockData b) =>
-            b != null && b != anything && !b.isAnyBlock && !IsMachine(b) && !sources.Contains(b);
+            b != null && b != anything && !b.isAnyBlock && !IsMachine(b)
+            && !sources.Contains(b) && !colorFamilyProducts.Contains(b);
 
         sources = new HashSet<BlockData>();
         foreach (var r in recipes)
@@ -141,6 +143,10 @@ public static class RecipeRandomizer
                 sources.Add(r.product);
         foreach (var b in lib.elementBlocks)
             if (b != null && b.unlockedByDefault) sources.Add(b);
+
+        // Pin colour-family products (Quartz & co.) out of the output shuffle so the family stays
+        // coherent: base inputs still shuffle via rho, base + [colour] still yields the variant.
+        colorFamilyProducts = DetectColorFamilyProducts(recipes);
 
         // sigma pool: distinct non-source element-block products
         var prod = new List<BlockData>(); var seen = new HashSet<BlockData>();
@@ -177,7 +183,50 @@ public static class RecipeRandomizer
         int remap = edges.Count(e => e.remapInputs);
         Plugin.Logger.LogInfo($"RecipeRandomizer: captured {productPool.Length} products, " +
                               $"{ingredientPool.Length} ingredient blocks, {edges.Length} recipes " +
-                              $"({remap} input-remappable), {treeSnaps.Sum(t => t.paths.Count)} tree paths.");
+                              $"({remap} input-remappable), {treeSnaps.Sum(t => t.paths.Count)} tree paths, " +
+                              $"{colorFamilyProducts.Count} colour-family products pinned.");
+    }
+
+    // A "colour family" is a set of Combine recipes sharing the same concrete-block ingredient multiset
+    // in which a base recipe (blocks only, or blocks + an "any colour" slot) coexists with variants that
+    // add exactly one specific-colour slot — the Quartz family: Sand + Time -> Quartz, and
+    // Sand + Time + [colour] -> Quartz <colour>. We return all of the family's products so they can be
+    // pinned out of sigma; their shared inputs still shuffle via rho, keeping the family coherent (base +
+    // [colour] always yields the matching variant) and letting the compendium show just the base recipe.
+    static HashSet<BlockData> DetectColorFamilyProducts(Recipe[] recipes)
+    {
+        var byBlocks = new Dictionary<string, List<(Recipe r, bool isBase, bool isVariant)>>();
+        foreach (var r in recipes)
+        {
+            if (r == null || r.type != Recipe.RecipeType.Combine || r.product == null) continue;
+            var ids = new List<int>();
+            bool specificColor = false, anyColor = false, otherSlot = false;
+            foreach (var ing in r.ingredients ?? Array.Empty<RecipeIngredient>())
+            {
+                if (ing.ingredientType == RecipeIngredient.RecipeIngredientType.Block)
+                {
+                    if (ing.block != null) ids.Add(ing.block.blockId); else otherSlot = true;
+                }
+                else if (ing.ingredientType == RecipeIngredient.RecipeIngredientType.Color)
+                {
+                    var col = F_IngredientColor.GetValue(ing) as BlockColor;
+                    if (col != null && col.colorName == AnyColorName) anyColor = true; else specificColor = true;
+                }
+                else otherSlot = true;   // a property / "any" slot -> not a quartz-like family
+            }
+            if (otherSlot || ids.Count == 0) continue;
+            ids.Sort();
+            var key = string.Join(",", ids);
+            if (!byBlocks.TryGetValue(key, out var list)) byBlocks[key] = list = new();
+            // base: blocks only, or blocks + any colour; variant: blocks + exactly one specific colour.
+            list.Add((r, !specificColor, specificColor && !anyColor));
+        }
+
+        var products = new HashSet<BlockData>();
+        foreach (var list in byBlocks.Values)
+            if (list.Any(x => x.isBase) && list.Any(x => x.isVariant))
+                foreach (var x in list) products.Add(x.r.product);
+        return products;
     }
 
     static Edge BuildEdge(Recipe r, HashSet<Recipe.RecipeType> treeTypes)

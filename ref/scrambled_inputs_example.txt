@@ -1,112 +1,112 @@
 INPUT + OUTPUT remap   (hazard filter: on)
-Ingredient blocks permutable (rho): 47   products permutable (sigma): 47
+Ingredient blocks permutable (rho): 47   products permutable (sigma): 35
 rho applies to: pure-block combine/combust/starstruck   sigma applies to: all products
 
 ==================================================================================
-SEED 12345   reachable=ALL OK   inputs remapped 44/47   outputs remapped 45/47   (864 swaps kept)
+SEED 12345   reachable=ALL OK   inputs remapped 44/47   outputs remapped 35/35   (691 swaps kept)
 ==================================================================================
 
 -- Scrambled recipe book (inputs via rho, outputs via sigma) --
-  [BlackHole    ] 9x Antimatter                                ->  Fire 3   (inputs vanilla)
-  [Combine      ] Dust + Air                                   ->  Quartz
-  [Combine      ] Luck + Wood + 2x Rainbow                     ->  Plasma
-  [Combine      ] Quartz yellow + Light + Darkness             ->  Quartz black
-  [Combine      ] 2x [Black] + Quartz blue                     ->  Shooting star
-  [Combine      ] Earth + Water                                ->  Mercury
-  [Combine      ] 2x <Energy>                                  ->  Fizzy water   (inputs vanilla)
-  [Combine      ] Iron + Water                                 ->  Quartz red
-  [Combine      ] Entropy + Fire 2 + Darkness                  ->  Time
-  [Combine      ] Ruby + Light + Darkness                      ->  Electricity
-  [Combine      ] Light + Earth                                ->  Quartz brown
-  [Combine      ] 2x [White] + Quartz blue                     ->  Quartz white
-  [Combine      ] 2x <Raw element> + Ether                     ->  Rainbow
-  [Combine      ] Mercury + Earth + 2x Lava                    ->  Ether
-  [Combine      ] Fire 2 + Copper                              ->  Entropy
-  [Combine      ] Stone + Lava + [Any color]                   ->  Darkness
-  [Combine      ] Stone + Lava                                 ->  Darkness
-  [Combine      ] Stone + Lava + [Black]                       ->  Iron
-  [Combine      ] Stone + Lava + [Blue]                        ->  Quartz grey
-  [Combine      ] Stone + Lava + [Brown]                       ->  Smoke
-  [Combine      ] Stone + Lava + [Green]                       ->  Quartz pink
-  [Combine      ] Stone + Lava + [Grey]                        ->  Wood
-  [Combine      ] Stone + Lava + [Orange]                      ->  Silver
-  [Combine      ] Stone + Lava + [Pink]                        ->  Sand
-  [Combine      ] Stone + Lava + [Purple]                      ->  Oil
-  [Combine      ] Stone + Lava + [Red]                         ->  Black hole
-  [Combine      ] Stone + Lava + [White]                       ->  Quartz blue
-  [Combine      ] Stone + Lava + [Yellow]                      ->  Copper
-  [Combine      ] Time + 2x Quartz white                       ->  Quasar
-  [Combine      ] Time + Water                                 ->  Magic
-  [Combine      ] Time + Iron                                  ->  Magic
-  [Combine      ] Void + Magic + Darkness                      ->  Ruby
-  [Combine      ] Light + Water                                ->  Meteorite
-  [Combine      ] Iron + Light                                 ->  Steam
-  [Combine      ] Quartz red + Water                           ->  Coal
-  [Combine      ] Iron + Earth                                 ->  Quartz yellow
-  [Combust      ] Mercury                                      ->  Lava
-  [Combust      ] Quartz pink                                  ->  Meteorite
-  [DissolveMetals] 2x <Metal> + Acid                            ->  Quartz green   (inputs vanilla)
-  [EvolvingFire ] Fire 1                                       ->  Fire 2   (inputs vanilla)
-  [EvolvingFire ] Fire 2                                       ->  Void   (inputs vanilla)
-  [Fall         ] <Aerial>                                     ->  Luck   (inputs vanilla)
-  [Fall         ] <Weighty>                                    ->  Acid   (inputs vanilla)
-  [Quasar       ] Black hole + Anything                        ->  Gold   (inputs vanilla)
-  [Quickening   ] Silver                                       ->  Light   (inputs vanilla)
-  [Rainbow      ] 7x [Any color]                               ->  Antimatter   (inputs vanilla)
-  [Starstruck   ] Water                                        ->  Quartz purple
-  [Starstruck   ] Earth                                        ->  Quartz orange
-  [Time         ] Ether                                        ->  Stone   (inputs vanilla)
-  [Void         ] <any>                                        ->  Dust   (inputs vanilla)
+  [BlackHole    ] 9x Antimatter                                ->  Electricity   (inputs vanilla)
+  [Combine      ] Iron + Steam                                 ->  Coal
+  [Combine      ] Fire 3 + Quartz red + 2x Mercury             ->  Fizzy water
+  [Combine      ] Void + Air + Quartz white                    ->  Ether
+  [Combine      ] 2x [Black] + Quartz black                    ->  Quasar
+  [Combine      ] Dust + Shooting star                         ->  Ruby
+  [Combine      ] 2x <Energy>                                  ->  Wood   (inputs vanilla)
+  [Combine      ] Earth + Shooting star                        ->  Stone
+  [Combine      ] Silver + Quartz yellow + Quartz white        ->  Fire 3
+  [Combine      ] Darkness + Air + Quartz white                ->  Entropy
+  [Combine      ] Air + Dust                                   ->  Fire 2
+  [Combine      ] 2x [White] + Quartz black                    ->  Void
+  [Combine      ] 2x <Raw element> + Quartz blue               ->  Dust
+  [Combine      ] Stone + Dust + 2x Fire 1                     ->  Light
+  [Combine      ] Quartz yellow + Ruby                         ->  Mercury
+  [Combine      ] Luck + Fire 1 + [Any color]                  ->  Quartz
+  [Combine      ] Luck + Fire 1                                ->  Quartz
+  [Combine      ] Luck + Fire 1 + [Black]                      ->  Quartz black
+  [Combine      ] Luck + Fire 1 + [Blue]                       ->  Quartz blue
+  [Combine      ] Luck + Fire 1 + [Brown]                      ->  Quartz brown
+  [Combine      ] Luck + Fire 1 + [Green]                      ->  Quartz green
+  [Combine      ] Luck + Fire 1 + [Grey]                       ->  Quartz grey
+  [Combine      ] Luck + Fire 1 + [Orange]                     ->  Quartz orange
+  [Combine      ] Luck + Fire 1 + [Pink]                       ->  Quartz pink
+  [Combine      ] Luck + Fire 1 + [Purple]                     ->  Quartz purple
+  [Combine      ] Luck + Fire 1 + [Red]                        ->  Quartz red
+  [Combine      ] Luck + Fire 1 + [White]                      ->  Quartz white
+  [Combine      ] Luck + Fire 1 + [Yellow]                     ->  Quartz yellow
+  [Combine      ] Gold + 2x Fizzy water                        ->  Time
+  [Combine      ] Gold + Shooting star                         ->  Rainbow
+  [Combine      ] Gold + Earth                                 ->  Rainbow
+  [Combine      ] Ether + Fire 2 + Quartz white                ->  Copper
+  [Combine      ] Air + Shooting star                          ->  Luck
+  [Combine      ] Earth + Air                                  ->  Sand
+  [Combine      ] Rainbow + Shooting star                      ->  Lava
+  [Combine      ] Earth + Dust                                 ->  Antimatter
+  [Combust      ] Stone                                        ->  Acid
+  [Combust      ] Sand                                         ->  Luck
+  [DissolveMetals] 2x <Metal> + Acid                            ->  Darkness   (inputs vanilla)
+  [EvolvingFire ] Fire 1                                       ->  Oil   (inputs vanilla)
+  [EvolvingFire ] Fire 2                                       ->  Shooting star   (inputs vanilla)
+  [Fall         ] <Aerial>                                     ->  Plasma   (inputs vanilla)
+  [Fall         ] <Weighty>                                    ->  Black hole   (inputs vanilla)
+  [Quasar       ] Black hole + Anything                        ->  Smoke   (inputs vanilla)
+  [Quickening   ] Silver                                       ->  Steam   (inputs vanilla)
+  [Rainbow      ] 7x [Any color]                               ->  Gold   (inputs vanilla)
+  [Starstruck   ] Shooting star                                ->  Magic
+  [Starstruck   ] Dust                                         ->  Iron
+  [Time         ] Ether                                        ->  Silver   (inputs vanilla)
+  [Void         ] <any>                                        ->  Meteorite   (inputs vanilla)
 
 -- Build order (craft one of every block from the generators) --
   Start: Air, Anything, Conveyor, Earth, Fire 1, Generator air, Generator earth, Generator fire, Generator water, Wall, Water
-   1. [Combine      ] Earth + Water                              ->  Mercury
-   2. [Combust      ] Mercury                                    ->  Lava
-   3. [Fall         ] <Weighty>                                  ->  Acid
-   4. [Combine      ] Mercury + Earth + 2x Lava                  ->  Ether
-   5. [Fall         ] <Aerial>                                   ->  Luck
-   6. [Rainbow      ] 7x [Any color]                             ->  Antimatter
-           colours: Green=Acid, White=Air, Brown=Earth, Pink=Ether, Orange=Fire 1, Grey=Mercury, Blue=Water
-   7. [Time         ] Ether                                      ->  Stone
-   8. [Void         ] <any>                                      ->  Dust
-   9. [BlackHole    ] 9x Antimatter                              ->  Fire 3
-  10. [Combine      ] Dust + Air                                 ->  Quartz
-  11. [Combine      ] 2x <Raw element> + Ether                   ->  Rainbow
-  12. [Combine      ] Stone + Lava + [Any color]                 ->  Darkness
-  13. [Combine      ] Stone + Lava + [Black]                     ->  Iron
-  14. [Combine      ] Stone + Lava + [Blue]                      ->  Quartz grey
-  15. [Combine      ] Stone + Lava + [Brown]                     ->  Smoke
-  16. [Combine      ] Stone + Lava + [Green]                     ->  Quartz pink
-  17. [Combine      ] Stone + Lava + [Grey]                      ->  Wood
-  18. [Combine      ] Stone + Lava + [Orange]                    ->  Silver
-  19. [Combine      ] Stone + Lava + [Pink]                      ->  Sand
-  20. [Combine      ] Stone + Lava + [Purple]                    ->  Oil
-  21. [Combine      ] Stone + Lava + [Red]                       ->  Black hole
-  22. [Combine      ] Stone + Lava + [White]                     ->  Quartz blue
-  23. [Combine      ] Stone + Lava + [Yellow]                    ->  Copper
-  24. [Combine      ] Iron + Earth                               ->  Quartz yellow
-  25. [Combust      ] Quartz pink                                ->  Meteorite
-  26. [DissolveMetals] 2x <Metal> + Acid                          ->  Quartz green
-  27. [EvolvingFire ] Fire 1                                     ->  Fire 2
-  28. [EvolvingFire ] Fire 2                                     ->  Void
-  29. [Quasar       ] Black hole + Anything                      ->  Gold
-  30. [Quickening   ] Silver                                     ->  Light
-  31. [Combine      ] Luck + Wood + 2x Rainbow                   ->  Plasma
-  32. [Combine      ] Quartz yellow + Light + Darkness           ->  Quartz black
-  33. [Combine      ] 2x [Black] + Quartz blue                   ->  Shooting star
-  34. [Combine      ] 2x <Energy>                                ->  Fizzy water
-  35. [Combine      ] Iron + Water                               ->  Quartz red
-  36. [Combine      ] Light + Earth                              ->  Quartz brown
-  37. [Combine      ] 2x [White] + Quartz blue                   ->  Quartz white
-  38. [Combine      ] Fire 2 + Copper                            ->  Entropy
-  39. [Combine      ] Iron + Light                               ->  Steam
-  40. [Combine      ] Quartz red + Water                         ->  Coal
-  41. [Starstruck   ] Water                                      ->  Quartz purple
-  42. [Starstruck   ] Earth                                      ->  Quartz orange
-  43. [Combine      ] Entropy + Fire 2 + Darkness                ->  Time
-  44. [Combine      ] Time + 2x Quartz white                     ->  Quasar
-  45. [Combine      ] Time + Water                               ->  Magic
-  46. [Combine      ] Void + Magic + Darkness                    ->  Ruby
-  47. [Combine      ] Ruby + Light + Darkness                    ->  Electricity
-  All 47 blocks crafted in 47 steps.
+   1. [Combine      ] Earth + Air                                ->  Sand
+   2. [Combust      ] Sand                                       ->  Luck
+   3. [Fall         ] <Weighty>                                  ->  Black hole
+   4. [Quasar       ] Black hole + Anything                      ->  Smoke
+   5. [Combine      ] Luck + Fire 1 + [Any color]                ->  Quartz
+   6. [Combine      ] Luck + Fire 1 + [Blue]                     ->  Quartz blue
+   7. [Combine      ] Luck + Fire 1 + [Brown]                    ->  Quartz brown
+   8. [Combine      ] Luck + Fire 1 + [Green]                    ->  Quartz green
+   9. [Combine      ] Luck + Fire 1 + [Grey]                     ->  Quartz grey
+  10. [Combine      ] Luck + Fire 1 + [Orange]                   ->  Quartz orange
+  11. [Combine      ] Luck + Fire 1 + [Pink]                     ->  Quartz pink
+  12. [Combine      ] Luck + Fire 1 + [Purple]                   ->  Quartz purple
+  13. [Combine      ] Luck + Fire 1 + [Red]                      ->  Quartz red
+  14. [Combine      ] Luck + Fire 1 + [White]                    ->  Quartz white
+  15. [Combine      ] Luck + Fire 1 + [Yellow]                   ->  Quartz yellow
+  16. [Fall         ] <Aerial>                                   ->  Plasma
+  17. [Rainbow      ] 7x [Any color]                             ->  Gold
+           colours: White=Air, Brown=Earth, Orange=Fire 1, Green=Luck, Purple=Plasma, Blue=Quartz blue, Grey=Quartz grey
+  18. [Combine      ] 2x <Raw element> + Quartz blue             ->  Dust
+  19. [Combine      ] Luck + Fire 1 + [Black]                    ->  Quartz black
+  20. [Combine      ] Gold + Earth                               ->  Rainbow
+  21. [Combine      ] Earth + Dust                               ->  Antimatter
+  22. [Void         ] <any>                                      ->  Meteorite
+  23. [BlackHole    ] 9x Antimatter                              ->  Electricity
+  24. [Combine      ] 2x [Black] + Quartz black                  ->  Quasar
+  25. [Combine      ] 2x <Energy>                                ->  Wood
+  26. [Combine      ] Air + Dust                                 ->  Fire 2
+  27. [Combine      ] 2x [White] + Quartz black                  ->  Void
+  28. [EvolvingFire ] Fire 1                                     ->  Oil
+  29. [EvolvingFire ] Fire 2                                     ->  Shooting star
+  30. [Starstruck   ] Shooting star                              ->  Magic
+  31. [Starstruck   ] Dust                                       ->  Iron
+  32. [Combine      ] Void + Air + Quartz white                  ->  Ether
+  33. [Combine      ] Dust + Shooting star                       ->  Ruby
+  34. [Combine      ] Earth + Shooting star                      ->  Stone
+  35. [Combine      ] Stone + Dust + 2x Fire 1                   ->  Light
+  36. [Combine      ] Quartz yellow + Ruby                       ->  Mercury
+  37. [Combine      ] Ether + Fire 2 + Quartz white              ->  Copper
+  38. [Combine      ] Rainbow + Shooting star                    ->  Lava
+  39. [Combust      ] Stone                                      ->  Acid
+  40. [DissolveMetals] 2x <Metal> + Acid                          ->  Darkness
+  41. [Time         ] Ether                                      ->  Silver
+  42. [Combine      ] Silver + Quartz yellow + Quartz white      ->  Fire 3
+  43. [Combine      ] Darkness + Air + Quartz white              ->  Entropy
+  44. [Quickening   ] Silver                                     ->  Steam
+  45. [Combine      ] Iron + Steam                               ->  Coal
+  46. [Combine      ] Fire 3 + Quartz red + 2x Mercury           ->  Fizzy water
+  47. [Combine      ] Gold + 2x Fizzy water                      ->  Time
+  All 35 blocks crafted in 47 steps.
 

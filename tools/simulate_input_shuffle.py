@@ -61,6 +61,34 @@ def remappable(r):
     return r["type"] in TREE_TYPES and any("block" in i for i in r["ingredients"])
 
 
+def color_family_products(edges):
+    """Quartz-style families: Combine recipes sharing a concrete-block ingredient multiset where a base
+    (blocks only, or blocks + [Any color]) coexists with variants adding one specific colour. Their
+    products are pinned out of sigma so the family stays coherent (base + [colour] -> the variant)."""
+    by_blocks = {}
+    for r in edges:
+        if r["type"] != "Combine" or not r["product"]:
+            continue
+        ids, specific, anyc, other = [], False, False, False
+        for ing in r["ingredients"]:
+            if "block" in ing:
+                ids.append(ing["block"])
+            elif "color" in ing:
+                anyc = anyc or ing["color"] == "Any color"
+                specific = specific or ing["color"] != "Any color"
+            else:
+                other = True
+        if other or not ids:
+            continue
+        key = ",".join(sorted(ids))
+        by_blocks.setdefault(key, []).append((r, not specific, specific and not anyc))
+    out = set()
+    for members in by_blocks.values():
+        if any(b for _, b, _ in members) and any(v for _, _, v in members):
+            out.update(r["product"] for r, _, _ in members)
+    return out
+
+
 def build_block_pool(blocks):
     """Blocks eligible as ingredient targets for rho: must be combinable."""
     return sorted(n for n, b in blocks.items()
@@ -201,6 +229,8 @@ def main():
     recipes, blocks = sim.load()
     sources, pool, edges, props, color = sim.build(recipes, blocks)
     brpool = build_block_pool(blocks)
+    family = color_family_products(edges)        # pinned out of sigma (Quartz family stays coherent)
+    pool = [p for p in pool if p not in family]
 
     out = [f"INPUT + OUTPUT remap   (hazard filter: {'on' if hazard_filter else 'off'})",
            f"Ingredient blocks permutable (rho): {len(brpool)}   products permutable (sigma): {len(pool)}",
